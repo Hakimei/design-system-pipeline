@@ -1,0 +1,92 @@
+{
+  "colors": {
+    "brand": {
+      "primary": {
+        "value": "#8d42f5",
+        "type": "color"
+      },
+      "secondary": {
+        "value": "#F9F9F9",
+        "type": "color"
+      }
+    },
+    "background": {
+      "primary": {
+        "value": "#F9F9F9",
+        "type": "color"
+      }
+    },
+    "text": {
+      "primary": {
+        "value": "#222222",
+        "type": "color"
+      }
+    },
+    "button": {
+      "primary": {
+        "background": {
+          "value": "{colors.brand.primary}",
+          "type": "color"
+        },
+        "text": {
+          "value": "{colors.brand.secondary}",
+          "type": "color"
+        }
+      }
+    }
+  },
+  "borderRadius": {
+    "small": {
+      "value": "4px",
+      "type": "dimension"
+    },
+    "medium": {
+      "value": "6px",
+      "type": "dimension"
+    },
+    "large": {
+      "value": "8px",
+      "type": "dimension"
+    }
+  },
+  "spacing": {
+    "button": {
+      "padding": {
+        "value": "24px",
+        "type": "dimension"
+      }
+    }
+  },
+  "typography": {
+    "fontSizes": {
+      "heading": {
+        "value": "24px",
+        "type": "dimension"
+      },
+      "body": {
+        "value": "16px",
+        "type": "dimension"
+      }
+    },
+    "fontWeights": {
+      "heading": {
+        "value": "700",
+        "type": "fontWeights"
+      },
+      "body": {
+        "value": "600",
+        "type": "fontWeights"
+      }
+    },
+    "lineHeights": {
+      "heading": {
+        "value": "130%",
+        "type": "lineHeight"
+      },
+      "body": {
+        "value": "150%",
+        "type": "lineHeight"
+      }
+    }
+  }
+}
