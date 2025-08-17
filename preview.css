@@ -4,7 +4,7 @@ body {
   font-size: var(--typography-font-sizes-heading);
   font-weight: var(--typography-font-weights-heading);
   line-height: var(--typography-line-heights-heading);
-  padding: 20px;
+  padding: var(--border-radius-medium);
   transition: background 0.3s ease, color 0.3s ease;
 }
 .btn-primary{
@@ -18,7 +18,7 @@ body {
   --btn-font-size-body: var(--typography-font-sizes-body);
   --btn-font-size-weight: var(--typography-font-weights-body);
   --btn-spacing-padding: var(--spacing-button-padding) var(--spacing-button-padding);
-  --btn-radius-shape: 0.75rem;
+  --btn-radius-shape: var(--border-radius-medium);
 
   /* Apply styles using the component's own variables */
   background: var(--btn-color-submit);

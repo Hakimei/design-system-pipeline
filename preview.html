@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Button Preview</title>
-  <link id="theme" rel="stylesheet" href="build/brandA/light-compact/variables.css">
+  <link id="theme" rel="stylesheet" href="build/brandA/light-round-compact/variables.css">
   <link rel="stylesheet" href="preview.css">
 </head>
 <body>
@@ -17,8 +17,8 @@
   document.addEventListener('DOMContentLoaded', () => {
     const toggleButton = document.getElementById('toggle');
     const themeLink = document.getElementById('theme');
-    const lightTheme = 'build/brandA/light-compact/variables.css';
-    const darkTheme = 'build/brandA/dark-cozy/variables.css';
+    const lightTheme = 'build/brandA/light-round-compact/variables.css';
+    const darkTheme = 'build/brandA/dark-round-cozy/variables.css';
 
     toggleButton.addEventListener('click', () => {
       const currentTheme = themeLink.getAttribute('href');

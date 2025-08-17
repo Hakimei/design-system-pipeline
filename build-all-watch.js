@@ -68,6 +68,10 @@ function buildAll() {
     const modeFiles = fs.readdirSync(modesDir);
     const modes = modeFiles.filter(file => file.endsWith('.json')).map(file => path.basename(file, '.json'));
 
+    const shapesDir = path.join(tokensDir, 'shapes');
+    const shapeFiles = fs.readdirSync(shapesDir);
+    const shapes = shapeFiles.filter(file => file.endsWith('.json')).map(file => path.basename(file, '.json'));
+
     const densitiesDir = path.join(tokensDir, 'densities');
     const densityFiles = fs.readdirSync(densitiesDir);
     const densities = densityFiles.filter(file => file.endsWith('.json')).map(file => path.basename(file, '.json'));
@@ -87,27 +91,31 @@ function buildAll() {
         const brandTokens = JSON.parse(fs.readFileSync(path.join(brandsDir, `${brand}.json`), 'utf8'));
 
         modes.forEach(mode => {
-            densities.forEach(density => {
-                const modeTokens = JSON.parse(fs.readFileSync(path.join(modesDir, `${mode}.json`), 'utf8'));
-                const densityTokens = JSON.parse(fs.readFileSync(path.join(densitiesDir, `${density}.json`), 'utf8'));
+            shapes.forEach(shape => {
+                densities.forEach(density => {
+                    const modeTokens = JSON.parse(fs.readFileSync(path.join(modesDir, `${mode}.json`), 'utf8'));
+                    const densityTokens = JSON.parse(fs.readFileSync(path.join(densitiesDir, `${density}.json`), 'utf8'));
+                    const shapeTokens = JSON.parse(fs.readFileSync(path.join(shapesDir, `${shape}.json`), 'utf8'));
 
-                let merged = mergeDeep(brandTokens, modeTokens);
-                merged = mergeDeep(merged, densityTokens);
-                merged = mergeDeep(merged, componentTokens);
+                    let merged = mergeDeep(brandTokens, modeTokens);
+                    merged = mergeDeep(merged, shapeTokens);
+                    merged = mergeDeep(merged, densityTokens);
+                    merged = mergeDeep(merged, componentTokens);
 
-                const themeName = `${brand}-${mode}-${density}`;
-                const fileName = `token/${themeName}.json`;
-                const filePath = `${buildDir}/${fileName}`;
-                const fileDir = path.dirname(filePath);
+                    const themeName = `${brand}-${mode}-${shape}-${density}`;
+                    const fileName = `token/${themeName}.json`;
+                    const filePath = `${buildDir}/${fileName}`;
+                    const fileDir = path.dirname(filePath);
 
-                if (!fs.existsSync(fileDir)) {
-                    fs.mkdirSync(fileDir, { recursive: true });
-                }
+                    if (!fs.existsSync(fileDir)) {
+                        fs.mkdirSync(fileDir, { recursive: true });
+                    }
 
-                fs.writeFileSync(filePath, JSON.stringify(merged, null, 2));
-                themesIndex[themeName] = `./${fileName}`;
+                    fs.writeFileSync(filePath, JSON.stringify(merged, null, 2));
+                    themesIndex[themeName] = `./${fileName}`;
 
-                console.log(`✅ Merged ${fileName}`);
+                    console.log(`✅ Merged ${fileName}`);
+                });
             });
         });
     });

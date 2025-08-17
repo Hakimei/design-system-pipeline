@@ -1,0 +1,16 @@
+{
+  "borderRadius": {
+    "small": {
+      "value": "0px",
+      "type": "dimension"
+    },
+    "medium": {
+      "value": "0px",
+      "type": "dimension"
+    },
+    "large": {
+      "value": "0px",
+      "type": "dimension"
+    }
+  }
+}
