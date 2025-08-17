@@ -38,6 +38,7 @@ tokens/
     compact.json
   components/
     sizing.json
+    button.json
 build/
 build-all-watch.js
 ```
