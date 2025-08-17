@@ -2,9 +2,9 @@
 Complete multi-brand, multi-theme, and semantic-aware token pipeline for Web, Android, and iOS.
 
 ## Structure layer
-Primitive & Alias (Semantic base)
-Semantic
-Components
+- Primitive & Alias (Semantic base)
+- Semantic
+- Components
 
 ## 1. Install
 ```
