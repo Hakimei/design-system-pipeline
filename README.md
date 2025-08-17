@@ -3,7 +3,8 @@ Complete multi-brand, multi-theme, and semantic-aware token pipeline for Web, An
 
 ## Structure layer
 Primitive & Alias (Semantic base)
-Semantic scoped: Components
+Semantic
+Components
 
 ## 1. Install
 ```
