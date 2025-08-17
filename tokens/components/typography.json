@@ -1,0 +1,34 @@
+{
+  "typography": {
+    "fontSizes": {
+      "heading": {
+        "value": "24px",
+        "type": "dimension"
+      },
+      "body": { 
+          "value": "16px",
+          "type": "dimension"
+      }
+    },
+    "fontWeights": {
+      "heading": {
+        "value": "700",
+        "type": "fontWeights"
+      },
+      "body": {
+        "value": "600",
+        "type": "fontWeights"
+      }
+    },
+    "lineHeights": {
+      "heading": {
+        "value": "130%",
+        "type": "lineHeight"
+      },
+      "body": {
+        "value": "150%",
+        "type": "lineHeight"
+      }
+    }
+  }
+}

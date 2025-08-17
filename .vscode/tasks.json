@@ -1,0 +1,19 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "watch",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "generate: build directory",
+			"detail": "node build-all-watch.js"
+		},
+		{
+			"label": "clean: remove build directory",
+			"type": "shell",
+			"command": "rm -rf build",
+			"problemMatcher": []
+		}
+	]
+}

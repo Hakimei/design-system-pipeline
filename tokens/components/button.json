@@ -1,0 +1,16 @@
+{
+  "colors": {
+    "button": {
+      "primary": {
+        "background": {
+          "value": "{colors.brand.primary}",
+          "type": "color"
+        },
+        "text": {
+          "value": "{colors.brand.secondary}",
+          "type": "color"
+        }
+      }
+    }
+  }
+}

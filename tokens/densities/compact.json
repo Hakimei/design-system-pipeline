@@ -1,0 +1,10 @@
+{
+  "spacing": {
+    "button": {
+      "padding": {
+        "value": "12px",
+        "type": "dimension"
+      }
+    }
+  }
+}

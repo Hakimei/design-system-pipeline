@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Button Preview</title>
+  <link id="theme" rel="stylesheet" href="build/brandA/light-compact/variables.css">
+  <link rel="stylesheet" href="preview.css">
+</head>
+<body>
+
+  <h1>Button Preview</h1>
+  <button id="toggle">Toggle Theme</button>
+  <hr style="margin: 20px 0;">
+  <button class="btn-primary">Primary Button</button>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggleButton = document.getElementById('toggle');
+    const themeLink = document.getElementById('theme');
+    const lightTheme = 'build/brandA/light-compact/variables.css';
+    const darkTheme = 'build/brandA/dark-cozy/variables.css';
+
+    toggleButton.addEventListener('click', () => {
+      const currentTheme = themeLink.getAttribute('href');
+      themeLink.setAttribute('href', currentTheme === lightTheme ? darkTheme : lightTheme);
+    });
+  });
+</script>
+</body>
+</html>

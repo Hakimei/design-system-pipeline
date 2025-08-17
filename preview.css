@@ -1,0 +1,32 @@
+body {
+  background: var(--colors-background-primary);
+  color: var(--colors-text-primary);
+  font-size: var(--typography-font-sizes-heading);
+  font-weight: var(--typography-font-weights-heading);
+  line-height: var(--typography-line-heights-heading);
+  padding: 20px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+.btn-primary{
+  /*
+    Component-level aliasing: Map design tokens to component-specific CSS variables.
+    This decouples the component's internal styling from the global token names,
+    making it more modular and maintainable.
+  */
+  --btn-color-submit: var(--colors-button-primary-background);
+  --btn-color-text: var(--colors-button-primary-text);
+  --btn-font-size-body: var(--typography-font-sizes-body);
+  --btn-font-size-weight: var(--typography-font-weights-body);
+  --btn-spacing-padding: var(--spacing-button-padding) var(--spacing-button-padding);
+  --btn-radius-shape: 0.75rem;
+
+  /* Apply styles using the component's own variables */
+  background: var(--btn-color-submit);
+  color: var(--btn-color-text);
+  font-size: var(--btn-font-size-body);
+  font-weight: var(--btn-font-size-weight);
+  padding: var(--btn-spacing-padding);
+  border-radius: var(--btn-radius-shape);
+  border: none;
+  cursor: pointer;
+}
