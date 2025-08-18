@@ -4,11 +4,11 @@
   Do not edit directly, this file was auto-generated.
 -->
 <resources>
-  <color name="colors_brand_primary">#ff8d42f5</color>
+  <color name="colors_brand_primary">#ffe54666</color>
   <color name="colors_brand_secondary">#fff9f9f9</color>
   <color name="colors_background_primary">#ff1d1d1d</color>
   <color name="colors_text_primary">#fff9f9f9</color>
-  <color name="colors_button_primary_background">#ff8d42f5</color>
+  <color name="colors_button_primary_background">#ffe54666</color>
   <color name="colors_button_primary_text">#fff9f9f9</color>
   <dimen name="border_radius_small">4.00dp</dimen>
   <dimen name="border_radius_medium">6.00dp</dimen>
