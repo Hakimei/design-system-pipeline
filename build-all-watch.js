@@ -104,32 +104,32 @@ async function buildThemes(tokenData) {
                     merged = mergeDeep(merged, densityTokens);
                     merged = mergeDeep(merged, componentTokens);
 
-                    // Recursively add metadata to tokens for filtering later
-                    const addMetadata = (obj, isPrimitive) => {
-                        for (const key in obj) {
-                            if (obj.hasOwnProperty(key)) {
-                                if (obj[key].hasOwnProperty('value')) { // This is a token
-                                    obj[key].attributes = obj[key].attributes || {};
-                                    obj[key].attributes.isPrimitive = isPrimitive;
-                                } else if (typeof obj[key] === 'object' && obj[key] !== null) { // This is a category
-                                    addMetadata(obj[key], isPrimitive);
-                                }
-                            }
-                        }
-                    };
-
                     const themeName = `${brandName}-${modeName}-${shapeName}-${densityName}`;
                     const fileName = `token/${themeName}.json`;
                     const filePath = `${buildDir}/${fileName}`;
                     const fileDir = path.dirname(filePath);
                     await fs.mkdir(fileDir, { recursive: true });
 
-                    // Before writing, we need to flag the tokens. This part is synchronous.
-                    // We create a deep copy of the merged tokens to modify.
-                    const finalTokens = JSON.parse(JSON.stringify(merged));
-                    addMetadata(finalTokens, true); // Assume all are primitive initially
-                    // Then, override the flag for non-primitive tokens
-                    [brandTokens, modeTokens, shapeTokens, densityTokens, componentTokens].forEach(tokenSet => addMetadata(finalTokens, false));
+                    // Recursively add metadata to tokens.
+                    // We traverse the source objects to decide if a token is primitive or not.
+                    const addMetadata = (targetObj, sourceObj, isPrimitive) => {
+                        for (const key in sourceObj) {
+                            if (sourceObj.hasOwnProperty(key) && targetObj.hasOwnProperty(key)) {
+                                if (sourceObj[key].hasOwnProperty('value')) { // This is a token
+                                    targetObj[key].attributes = targetObj[key].attributes || {};
+                                    targetObj[key].attributes.isPrimitive = isPrimitive;
+                                } else if (typeof sourceObj[key] === 'object' && sourceObj[key] !== null) { // This is a category
+                                    addMetadata(targetObj[key], sourceObj[key], isPrimitive);
+                                }
+                            }
+                        }
+                    };
+
+                    const finalTokens = JSON.parse(JSON.stringify(merged)); // Deep copy
+                    addMetadata(finalTokens, primitiveTokens, true);
+                    [brandTokens, modeTokens, shapeTokens, densityTokens, componentTokens].forEach(tokenSet => {
+                        addMetadata(finalTokens, tokenSet, false);
+                    });
 
                     await fs.writeFile(filePath, JSON.stringify(finalTokens, null, 2));
                     themesIndex[themeName] = `./${fileName}`;
@@ -222,6 +222,8 @@ function buildThemePlatforms(themesIndex) {
                         options: {
                             fileHeader: () => fileHeader(),
                         },
+                        // Exclude primitive tokens to avoid duplication with the base file
+                        filter: (token) => !token.attributes.isPrimitive,
                     }]
                 },
                 ios: {
@@ -234,6 +236,8 @@ function buildThemePlatforms(themesIndex) {
                         options: {
                             fileHeader: () => fileHeader(),
                         },
+                        // Exclude primitive tokens to avoid duplication with the base file
+                        filter: (token) => !token.attributes.isPrimitive,
                     }]
                 }
             }

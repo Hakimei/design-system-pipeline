@@ -3,38 +3,38 @@
     "white": {
       "value": "#FFFFFF",
       "attributes": {
-        "isPrimitive": false
+        "isPrimitive": true
       }
     },
     "black": {
       "value": "#181818",
       "attributes": {
-        "isPrimitive": false
+        "isPrimitive": true
       }
     },
     "neutral": {
       "100": {
         "value": "#f9f9f9",
         "attributes": {
-          "isPrimitive": false
+          "isPrimitive": true
         }
       },
       "200": {
         "value": "#e0e0e0",
         "attributes": {
-          "isPrimitive": false
+          "isPrimitive": true
         }
       },
       "800": {
         "value": "#222222",
         "attributes": {
-          "isPrimitive": false
+          "isPrimitive": true
         }
       },
       "900": {
         "value": "#1d1d1d",
         "attributes": {
-          "isPrimitive": false
+          "isPrimitive": true
         }
       }
     }
@@ -45,14 +45,14 @@
         "value": "24px",
         "type": "dimension",
         "attributes": {
-          "isPrimitive": false
+          "isPrimitive": true
         }
       },
       "body": {
         "value": "16px",
         "type": "dimension",
         "attributes": {
-          "isPrimitive": false
+          "isPrimitive": true
         }
       }
     },
@@ -61,14 +61,14 @@
         "value": "700",
         "type": "fontWeights",
         "attributes": {
-          "isPrimitive": false
+          "isPrimitive": true
         }
       },
       "body": {
         "value": "500",
         "type": "fontWeights",
         "attributes": {
-          "isPrimitive": false
+          "isPrimitive": true
         }
       }
     },
@@ -77,14 +77,14 @@
         "value": "130%",
         "type": "lineHeight",
         "attributes": {
-          "isPrimitive": false
+          "isPrimitive": true
         }
       },
       "body": {
         "value": "150%",
         "type": "lineHeight",
         "attributes": {
-          "isPrimitive": false
+          "isPrimitive": true
         }
       }
     }
@@ -108,7 +108,7 @@
     },
     "background": {
       "primary": {
-        "value": "#1d1d1d",
+        "value": "#181818",
         "type": "color",
         "attributes": {
           "isPrimitive": false
