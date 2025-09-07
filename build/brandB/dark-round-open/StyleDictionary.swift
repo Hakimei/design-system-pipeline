@@ -3,7 +3,7 @@
 // StyleDictionary.swift
 //
 
-// Do not edit — auto-generated on Sun, 07 Sept 2025, 11:28:59 GMT+7
+// Do not edit — auto-generated on Sun, 07 Sept 2025, 11:57:28 GMT+7
 
 
 import SwiftUI

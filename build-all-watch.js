@@ -1,8 +1,9 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 import path from 'path';
 import chokidar from 'chokidar';
 import StyleDictionary from 'style-dictionary';
 import { fileHeader } from './fileHeader.js';
+import { glob } from 'glob';
 
 StyleDictionary.registerTransform({
     name: 'ts/size/lineheight',
@@ -44,47 +45,49 @@ function mergeDeep(target, source) {
     return output;
 }
 
-function readJsonFilesFromDir(dir) {
-    return fs.readdirSync(dir)
-        .filter(file => file.endsWith('.json'))
-        .reduce((acc, file) => {
+async function readJsonFilesFromDir(dir) {
+    const files = (await fs.readdir(dir)).filter(file => file.endsWith('.json'));
+    return files.reduce(async (accPromise, file) => {
+            const acc = await accPromise;
             const name = path.basename(file, '.json');
             const filePath = path.join(dir, file);
-            acc[name] = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+            acc[name] = JSON.parse(await fs.readFile(filePath, 'utf8'));
             return acc;
-        }, {});
+        }, Promise.resolve({}));
 }
 
-function loadTokens() {
+async function loadTokens() {
     const tokensDir = './tokens';
 
     // --- 1. Build Base Primitives ---
     console.log('\nBuilding base primitive tokens...');
     const primitivesDir = path.join(tokensDir, 'primitives');
-    const primitiveFiles = fs.readdirSync(primitivesDir).filter(file => file.endsWith('.json')).map(file => path.join(primitivesDir, file));
+    const primitiveFiles = (await fs.readdir(primitivesDir)).filter(file => file.endsWith('.json')).map(file => path.join(primitivesDir, file));
 
-    const primitiveTokens = primitiveFiles.reduce((acc, file) => {
-        return mergeDeep(acc, JSON.parse(fs.readFileSync(file, 'utf8')));
-    }, {});
+    const primitiveTokens = await primitiveFiles.reduce(async (accPromise, file) => {
+        const acc = await accPromise;
+        return mergeDeep(acc, JSON.parse(await fs.readFile(file, 'utf8')));
+    }, Promise.resolve({}));
 
-    const brands = readJsonFilesFromDir(path.join(tokensDir, 'brands'));
-    const modes = readJsonFilesFromDir(path.join(tokensDir, 'modes'));
-    const shapes = readJsonFilesFromDir(path.join(tokensDir, 'shapes'));
-    const densities = readJsonFilesFromDir(path.join(tokensDir, 'densities'));
+    const brands = await readJsonFilesFromDir(path.join(tokensDir, 'brands'));
+    const modes = await readJsonFilesFromDir(path.join(tokensDir, 'modes'));
+    const shapes = await readJsonFilesFromDir(path.join(tokensDir, 'shapes'));
+    const densities = await readJsonFilesFromDir(path.join(tokensDir, 'densities'));
 
     const componentsDir = path.join(tokensDir, 'components');
-    const componentFiles = fs.readdirSync(componentsDir).filter(file => file.endsWith('.json'));
-    const componentTokens = componentFiles.reduce((acc, file) => {
+    const componentFiles = (await fs.readdir(componentsDir)).filter(file => file.endsWith('.json'));
+    const componentTokens = await componentFiles.reduce(async (accPromise, file) => {
+        const acc = await accPromise;
         const componentPath = path.join(componentsDir, file);
-        const componentTokenData = JSON.parse(fs.readFileSync(componentPath, 'utf8'));
+        const componentTokenData = JSON.parse(await fs.readFile(componentPath, 'utf8'));
         console.log(`🧬 Merging component tokens from ${file}`);
         return mergeDeep(acc, componentTokenData);
-    }, {});
+    }, Promise.resolve({}));
 
     return { primitiveTokens, primitiveFiles, brands, modes, shapes, densities, componentTokens };
 }
 
-function buildThemes(tokenData) {
+async function buildThemes(tokenData) {
     const { primitiveTokens, brands, modes, shapes, densities, componentTokens } = tokenData;
     const buildDir = './build';
     const themesIndex = {};
@@ -119,19 +122,16 @@ function buildThemes(tokenData) {
                     const fileName = `token/${themeName}.json`;
                     const filePath = `${buildDir}/${fileName}`;
                     const fileDir = path.dirname(filePath);
+                    await fs.mkdir(fileDir, { recursive: true });
 
-                    if (!fs.existsSync(fileDir)) {
-                        fs.mkdirSync(fileDir, { recursive: true });
-                    }
-
-                    // Before writing, we need to flag the tokens.
+                    // Before writing, we need to flag the tokens. This part is synchronous.
                     // We create a deep copy of the merged tokens to modify.
                     const finalTokens = JSON.parse(JSON.stringify(merged));
                     addMetadata(finalTokens, true); // Assume all are primitive initially
                     // Then, override the flag for non-primitive tokens
                     [brandTokens, modeTokens, shapeTokens, densityTokens, componentTokens].forEach(tokenSet => addMetadata(finalTokens, false));
 
-                    fs.writeFileSync(filePath, JSON.stringify(finalTokens, null, 2));
+                    await fs.writeFile(filePath, JSON.stringify(finalTokens, null, 2));
                     themesIndex[themeName] = `./${fileName}`;
 
                     console.log(`✅ Merged ${fileName}`);
@@ -140,7 +140,7 @@ function buildThemes(tokenData) {
         }
     }
 
-    fs.writeFileSync(`${buildDir}/themes.json`, JSON.stringify(themesIndex, null, 2));
+    await fs.writeFile(`${buildDir}/themes.json`, JSON.stringify(themesIndex, null, 2));
     console.log(`✅ Updated themes.json`);
     return themesIndex;
 }
@@ -244,17 +244,98 @@ function buildThemePlatforms(themesIndex) {
     });
 }
 
-function buildAll() {
+/**
+ * This function adds comments to CSS files to group custom properties.
+ */
+async function addCommentsToCss() {
+    console.log('\n✏️  Adding comments to generated CSS files...');
+
+    // Mapping of custom property prefixes to their desired comment.
+    const tokenGroupComments = {
+        'color-': 'primitive color',
+        'typography-': 'primitive typography',
+        'colors-': 'semantic color',
+        'border-radius-': 'semantic border radius',
+        'spacing-': 'semantic spacing',
+    };
+
+    const cssFiles = await glob('build/**/variables.css');
+
+    if (cssFiles.length === 0) {
+        console.warn('⚠️ No "variables.css" files found to add comments to.');
+        return;
+    }
+
+    for (const filePath of cssFiles) {
+        try {
+            const content = await fs.readFile(filePath, 'utf-8');
+            const lines = content.split('\n');
+            const newLines = [];
+            let inRootBlock = false;
+            let lastMatchedPrefix = null;
+
+            for (const line of lines) {
+                if (line.trim() === ':root {') {
+                    inRootBlock = true;
+                    newLines.push(line);
+                    continue;
+                }
+
+                if (line.trim() === '}') {
+                    inRootBlock = false;
+                    // Add a newline before the closing brace if the last line wasn't empty
+                    if (newLines.length > 0 && newLines[newLines.length - 1].trim() !== '') {
+                        newLines.push('');
+                    }
+                    newLines.push(line);
+                    continue;
+                }
+
+                if (inRootBlock && line.trim().startsWith('--')) {
+                    const cssVariable = line.trim().split(':')[0]; // e.g., --color-white
+                    let currentPrefix = null;
+
+                    // Find which group the variable belongs to
+                    for (const prefix in tokenGroupComments) {
+                        if (cssVariable.startsWith(`--${prefix}`)) {
+                            currentPrefix = prefix;
+                            break;
+                        }
+                    }
+
+                    // If this is a new group, add the comment
+                    if (currentPrefix && currentPrefix !== lastMatchedPrefix) {
+                        // Add a blank line for separation before the new group comment
+                        if (lastMatchedPrefix !== null) {
+                            newLines.push('');
+                        }
+                        newLines.push(`  /* ${tokenGroupComments[currentPrefix]} */`);
+                        lastMatchedPrefix = currentPrefix;
+                    }
+                }
+                newLines.push(line);
+            }
+
+            const newContent = newLines.join('\n');
+            await fs.writeFile(filePath, newContent, 'utf-8');
+        } catch (error) {
+            console.error(`❌ Error processing ${filePath}:`, error);
+        }
+    }
+    console.log(`✅ Comments added to ${cssFiles.length} CSS file(s).`);
+}
+
+async function buildAll() {
     const buildDir = './build';
     console.log('\n🔄 Rebuilding tokens for ALL brands & platforms...');
-
-    if (!fs.existsSync(buildDir)) fs.mkdirSync(buildDir, { recursive: true });
-
-    const tokenData = loadTokens();
-    const themesIndex = buildThemes(tokenData);
+    
+    await fs.mkdir(buildDir, { recursive: true }).catch(() => {});
+    const tokenData = await loadTokens();
+    const themesIndex = await buildThemes(tokenData);
 
     buildBase(tokenData.primitiveFiles);
     buildThemePlatforms(themesIndex);
+    await addCommentsToCss();
 
     console.log(`🎉 Build complete!`);
 }
@@ -267,10 +348,10 @@ function debounce(func, timeout = 300){
   };
 }
 
-const handleFileChange = debounce((filePath) => {
+const handleFileChange = debounce(async (filePath) => {
     console.log(`\n📂 Detected change in: ${filePath}`);
     try {
-        buildAll();
+        await buildAll();
     } catch (error) {
         console.error(`\n❌ Error during rebuild:`, error);
     }
