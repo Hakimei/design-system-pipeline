@@ -32,50 +32,45 @@ StyleDictionary.registerTransformGroup({
     transforms: ['size/pxToRem'].concat(StyleDictionary.hooks.transformGroups['ios-swift'], ['ts/size/lineheight'])
 });
 
-const tokensDir = './tokens';
-const buildDir = './build';
-
 function mergeDeep(target, source) {
-    const output = { ...target };
-
-    if (target instanceof Object && source instanceof Object) {
-        for (const key in source) {
-            if (source[key] instanceof Object) {
-                if (key in target && target[key] instanceof Object) {
-                    output[key] = mergeDeep(target[key], source[key]);
-                } else {
-                    output[key] = source[key];
-                }
-            } else {
-                output[key] = source[key];
+    const output = { ...target, ...source };
+    if (typeof target === 'object' && target !== null && typeof source === 'object' && source !== null) {
+        for (const key of Object.keys(source)) {
+            if (typeof source[key] === 'object' && source[key] !== null && key in target && typeof target[key] === 'object' && target[key] !== null) {
+                output[key] = mergeDeep(target[key], source[key]);
             }
         }
     }
-
     return output;
 }
 
-function buildAll() {
-    console.log('\n🔄 Rebuilding tokens for ALL brands & platforms...');
+function readJsonFilesFromDir(dir) {
+    return fs.readdirSync(dir)
+        .filter(file => file.endsWith('.json'))
+        .reduce((acc, file) => {
+            const name = path.basename(file, '.json');
+            const filePath = path.join(dir, file);
+            acc[name] = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+            return acc;
+        }, {});
+}
 
-    if (!fs.existsSync(buildDir)) fs.mkdirSync(buildDir);
+function loadTokens() {
+    const tokensDir = './tokens';
 
-    // Dynamic detection for brands, modes, and densities
-    const brandsDir = path.join(tokensDir, 'brands');
-    const brandFiles = fs.readdirSync(brandsDir);
-    const brands = brandFiles.filter(file => file.endsWith('.json')).map(file => path.basename(file, '.json'));
+    // --- 1. Build Base Primitives ---
+    console.log('\nBuilding base primitive tokens...');
+    const primitivesDir = path.join(tokensDir, 'primitives');
+    const primitiveFiles = fs.readdirSync(primitivesDir).filter(file => file.endsWith('.json')).map(file => path.join(primitivesDir, file));
 
-    const modesDir = path.join(tokensDir, 'modes');
-    const modeFiles = fs.readdirSync(modesDir);
-    const modes = modeFiles.filter(file => file.endsWith('.json')).map(file => path.basename(file, '.json'));
+    const primitiveTokens = primitiveFiles.reduce((acc, file) => {
+        return mergeDeep(acc, JSON.parse(fs.readFileSync(file, 'utf8')));
+    }, {});
 
-    const shapesDir = path.join(tokensDir, 'shapes');
-    const shapeFiles = fs.readdirSync(shapesDir);
-    const shapes = shapeFiles.filter(file => file.endsWith('.json')).map(file => path.basename(file, '.json'));
-
-    const densitiesDir = path.join(tokensDir, 'densities');
-    const densityFiles = fs.readdirSync(densitiesDir);
-    const densities = densityFiles.filter(file => file.endsWith('.json')).map(file => path.basename(file, '.json'));
+    const brands = readJsonFilesFromDir(path.join(tokensDir, 'brands'));
+    const modes = readJsonFilesFromDir(path.join(tokensDir, 'modes'));
+    const shapes = readJsonFilesFromDir(path.join(tokensDir, 'shapes'));
+    const densities = readJsonFilesFromDir(path.join(tokensDir, 'densities'));
 
     const componentsDir = path.join(tokensDir, 'components');
     const componentFiles = fs.readdirSync(componentsDir).filter(file => file.endsWith('.json'));
@@ -86,24 +81,41 @@ function buildAll() {
         return mergeDeep(acc, componentTokenData);
     }, {});
 
+    return { primitiveTokens, primitiveFiles, brands, modes, shapes, densities, componentTokens };
+}
+
+function buildThemes(tokenData) {
+    const { primitiveTokens, brands, modes, shapes, densities, componentTokens } = tokenData;
+    const buildDir = './build';
     const themesIndex = {};
 
-    brands.forEach(brand => {
-        const brandTokens = JSON.parse(fs.readFileSync(path.join(brandsDir, `${brand}.json`), 'utf8'));
+    // --- 2. Merge and Build Themes ---
+    for (const [brandName, brandTokens] of Object.entries(brands)) {
+        for (const [modeName, modeTokens] of Object.entries(modes)) {
+            for (const [shapeName, shapeTokens] of Object.entries(shapes)) {
+                for (const [densityName, densityTokens] of Object.entries(densities)) {
 
-        modes.forEach(mode => {
-            shapes.forEach(shape => {
-                densities.forEach(density => {
-                    const modeTokens = JSON.parse(fs.readFileSync(path.join(modesDir, `${mode}.json`), 'utf8'));
-                    const densityTokens = JSON.parse(fs.readFileSync(path.join(densitiesDir, `${density}.json`), 'utf8'));
-                    const shapeTokens = JSON.parse(fs.readFileSync(path.join(shapesDir, `${shape}.json`), 'utf8'));
-
-                    let merged = mergeDeep(brandTokens, modeTokens);
+                    let merged = mergeDeep(primitiveTokens, brandTokens);
+                    merged = mergeDeep(merged, modeTokens);
                     merged = mergeDeep(merged, shapeTokens);
                     merged = mergeDeep(merged, densityTokens);
                     merged = mergeDeep(merged, componentTokens);
 
-                    const themeName = `${brand}-${mode}-${shape}-${density}`;
+                    // Recursively add metadata to tokens for filtering later
+                    const addMetadata = (obj, isPrimitive) => {
+                        for (const key in obj) {
+                            if (obj.hasOwnProperty(key)) {
+                                if (obj[key].hasOwnProperty('value')) { // This is a token
+                                    obj[key].attributes = obj[key].attributes || {};
+                                    obj[key].attributes.isPrimitive = isPrimitive;
+                                } else if (typeof obj[key] === 'object' && obj[key] !== null) { // This is a category
+                                    addMetadata(obj[key], isPrimitive);
+                                }
+                            }
+                        }
+                    };
+
+                    const themeName = `${brandName}-${modeName}-${shapeName}-${densityName}`;
                     const fileName = `token/${themeName}.json`;
                     const filePath = `${buildDir}/${fileName}`;
                     const fileDir = path.dirname(filePath);
@@ -112,18 +124,74 @@ function buildAll() {
                         fs.mkdirSync(fileDir, { recursive: true });
                     }
 
-                    fs.writeFileSync(filePath, JSON.stringify(merged, null, 2));
+                    // Before writing, we need to flag the tokens.
+                    // We create a deep copy of the merged tokens to modify.
+                    const finalTokens = JSON.parse(JSON.stringify(merged));
+                    addMetadata(finalTokens, true); // Assume all are primitive initially
+                    // Then, override the flag for non-primitive tokens
+                    [brandTokens, modeTokens, shapeTokens, densityTokens, componentTokens].forEach(tokenSet => addMetadata(finalTokens, false));
+
+                    fs.writeFileSync(filePath, JSON.stringify(finalTokens, null, 2));
                     themesIndex[themeName] = `./${fileName}`;
 
                     console.log(`✅ Merged ${fileName}`);
-                });
-            });
-        });
-    });
+                }
+            }
+        }
+    }
 
     fs.writeFileSync(`${buildDir}/themes.json`, JSON.stringify(themesIndex, null, 2));
     console.log(`✅ Updated themes.json`);
+    return themesIndex;
+}
 
+function buildBase(primitiveFiles) {
+    const buildDir = './build';
+    const baseBuildPath = `${buildDir}/base/`;
+    const SDBase = new StyleDictionary({
+        source: primitiveFiles,
+        platforms: {
+            css: {
+                transformGroup: 'custom/css',
+                buildPath: baseBuildPath,
+                files: [{
+                    destination: 'variables.css',
+                    format: 'css/variables',
+                    options: {
+                        fileHeader: () => fileHeader(),
+                    },
+                }]
+            },
+            android: {
+                transformGroup: 'custom/android',
+                buildPath: baseBuildPath,
+                files: [{
+                    destination: 'tokens.xml',
+                    format: 'android/resources',
+                    options: {
+                        fileHeader: () => fileHeader(),
+                    },
+                }]
+            },
+            ios: {
+                transformGroup: 'custom/ios-swift',
+                buildPath: baseBuildPath,
+                files: [{
+                    destination: 'StyleDictionary.swift',
+                    format: 'ios-swift/class.swift',
+                    options: {
+                        fileHeader: () => fileHeader(),
+                    },
+                }]
+            }
+        }
+    });
+    SDBase.buildAllPlatforms();
+    console.log(`✅ Built base primitives for Web/Android/iOS`);
+}
+
+function buildThemePlatforms(themesIndex) {
+    const buildDir = './build';
     Object.entries(themesIndex).forEach(([themeName, filePath]) => {
         const [brand, ...rest] = themeName.split('-');
         const subTheme = rest.join('-');
@@ -141,6 +209,8 @@ function buildAll() {
                         options: {
                             fileHeader: () => fileHeader(),
                         },
+                        // Exclude primitive tokens to avoid duplication with the base file
+                        filter: (token) => !token.attributes.isPrimitive,
                     }]
                 },
                 android: {
@@ -161,7 +231,6 @@ function buildAll() {
                         destination: 'StyleDictionary.swift',
                         format: 'ios-swift/class.swift',
                         className: 'StyleDictionary',
-                        type: 'class',
                         options: {
                             fileHeader: () => fileHeader(),
                         },
@@ -173,6 +242,19 @@ function buildAll() {
         SD.buildAllPlatforms();
         console.log(`✅ Built Web/Android/iOS for ${themeName}`);
     });
+}
+
+function buildAll() {
+    const buildDir = './build';
+    console.log('\n🔄 Rebuilding tokens for ALL brands & platforms...');
+
+    if (!fs.existsSync(buildDir)) fs.mkdirSync(buildDir, { recursive: true });
+
+    const tokenData = loadTokens();
+    const themesIndex = buildThemes(tokenData);
+
+    buildBase(tokenData.primitiveFiles);
+    buildThemePlatforms(themesIndex);
 
     console.log(`🎉 Build complete!`);
 }
@@ -196,6 +278,8 @@ const handleFileChange = debounce((filePath) => {
 
 // Initial build
 buildAll();
+
+const tokensDir = './tokens';
 
 // Watch for changes
 console.log('👀 Watching for token changes...');

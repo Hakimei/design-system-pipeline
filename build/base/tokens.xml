@@ -16,14 +16,4 @@
   <string name="typography_font_weights_body">500</string>
   <string name="typography_line_heights_heading">1.3</string>
   <string name="typography_line_heights_body">1.5</string>
-  <color name="colors_brand_primary">#ffe54666</color>
-  <color name="colors_brand_secondary">#fff9f9f9</color>
-  <color name="colors_background_primary">#fff9f9f9</color>
-  <color name="colors_text_primary">#ff222222</color>
-  <color name="colors_button_primary_background">#ffe54666</color>
-  <color name="colors_button_primary_text">#fff9f9f9</color>
-  <dimen name="border_radius_small">0.00dp</dimen>
-  <dimen name="border_radius_medium">0.00dp</dimen>
-  <dimen name="border_radius_large">0.00dp</dimen>
-  <dimen name="spacing_button_padding">12.00dp</dimen>
 </resources>
