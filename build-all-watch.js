@@ -325,6 +325,146 @@ async function addCommentsToCss() {
     console.log(`✅ Comments added to ${cssFiles.length} CSS file(s).`);
 }
 
+/**
+ * This function adds comments to XML files to group resources.
+ */
+async function addCommentsToXml() {
+    console.log('\n✏️  Adding comments to generated XML files...');
+
+    // Mapping of resource name prefixes to their desired comment.
+    // These prefixes correspond to the token names after the 'name/android/snake' transform.
+    const tokenGroupComments = {
+        'color_': 'primitive color',
+        'typography_': 'primitive typography',
+        'colors_': 'semantic color',
+        'border_radius_': 'semantic border radius',
+        'spacing_': 'semantic spacing',
+    };
+
+    const xmlFiles = await glob('build/**/*.xml');
+
+    if (xmlFiles.length === 0) {
+        console.warn('⚠️ No ".xml" files found to add comments to.');
+        return;
+    }
+
+    for (const filePath of xmlFiles) {
+        try {
+            const content = await fs.readFile(filePath, 'utf-8');
+            const lines = content.split('\n');
+            const newLines = [];
+            let inResourcesBlock = false;
+            let lastMatchedPrefix = null;
+
+            for (const line of lines) {
+                if (line.trim().startsWith('<resources')) {
+                    inResourcesBlock = true;
+                    newLines.push(line);
+                    continue;
+                }
+
+                if (line.trim() === '</resources>') {
+                    inResourcesBlock = false;
+                    if (newLines.length > 0 && newLines[newLines.length - 1].trim() !== '') {
+                        newLines.push('');
+                    }
+                    newLines.push(line);
+                    continue;
+                }
+
+                if (inResourcesBlock && line.trim().startsWith('<')) {
+                    const nameMatch = line.match(/name="([^"]+)"/);
+                    if (nameMatch) {
+                        const resourceName = nameMatch[1]; // e.g., color_white
+                        const currentPrefix = Object.keys(tokenGroupComments).find(p => resourceName.startsWith(p));
+
+                        if (currentPrefix && currentPrefix !== lastMatchedPrefix) {
+                            if (lastMatchedPrefix !== null) newLines.push('');
+                            newLines.push(`  <!-- ${tokenGroupComments[currentPrefix]} -->`);
+                            lastMatchedPrefix = currentPrefix;
+                        }
+                    }
+                }
+                newLines.push(line);
+            }
+
+            await fs.writeFile(filePath, newLines.join('\n'), 'utf-8');
+        } catch (error) {
+            console.error(`❌ Error processing ${filePath}:`, error);
+        }
+    }
+    console.log(`✅ Comments added to ${xmlFiles.length} XML file(s).`);
+}
+
+/**
+ * This function adds comments to Swift files to group token properties.
+ */
+async function addCommentsToSwift() {
+    console.log('\n✏️  Adding comments to generated Swift files...');
+
+    // Mapping of property name prefixes to their desired comment.
+    // These prefixes correspond to the token names after the 'name/cti/camel' transform.
+    const tokenGroupComments = {
+        'color': 'Primitive color',
+        'typography': 'Primitive typography',
+        'colors': 'Semantic color',
+        'borderRadius': 'Semantic border radius',
+        'spacing': 'Semantic spacing',
+    };
+
+    // Find all StyleDictionary.swift files in the build directory
+    const swiftFiles = await glob('build/**/StyleDictionary.swift');
+
+    if (swiftFiles.length === 0) {
+        console.warn('⚠️ No "StyleDictionary.swift" files found to add comments to.');
+        return;
+    }
+
+    for (const filePath of swiftFiles) {
+        try {
+            const content = await fs.readFile(filePath, 'utf-8');
+            const lines = content.split('\n');
+            const newLines = [];
+            let inClassBlock = false;
+            let lastMatchedPrefix = null;
+
+            for (const line of lines) {
+                if (line.trim().startsWith('public class')) {
+                    inClassBlock = true;
+                    newLines.push(line);
+                    continue;
+                }
+
+                if (inClassBlock && line.trim() === '}') {
+                    inClassBlock = false;
+                    if (newLines.length > 0 && newLines[newLines.length - 1].trim() !== '') newLines.push('');
+                    newLines.push(line);
+                    continue;
+                }
+
+                if (inClassBlock && line.trim().startsWith('public static let')) {
+                    const nameMatch = line.match(/public static let (\w+)/);
+                    if (nameMatch) {
+                        const propertyName = nameMatch[1]; // e.g., colorBlack
+                        const currentPrefix = Object.keys(tokenGroupComments).find(p => propertyName.startsWith(p));
+
+                        if (currentPrefix && currentPrefix !== lastMatchedPrefix) {
+                            if (lastMatchedPrefix !== null) newLines.push('');
+                            newLines.push(`    // ${tokenGroupComments[currentPrefix]}`);
+                            lastMatchedPrefix = currentPrefix;
+                        }
+                    }
+                }
+                newLines.push(line);
+            }
+            await fs.writeFile(filePath, newLines.join('\n'), 'utf-8');
+        } catch (error) {
+            console.error(`❌ Error processing ${filePath}:`, error);
+        }
+    }
+    console.log(`✅ Comments added to ${swiftFiles.length} Swift file(s).`);
+}
+
 async function buildAll() {
     const buildDir = './build';
     console.log('\n🔄 Rebuilding tokens for ALL brands & platforms...');
@@ -336,6 +476,8 @@ async function buildAll() {
     buildBase(tokenData.primitiveFiles);
     buildThemePlatforms(themesIndex);
     await addCommentsToCss();
+    await addCommentsToXml();
+    await addCommentsToSwift();
 
     console.log(`🎉 Build complete!`);
 }
