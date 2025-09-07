@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import chokidar from 'chokidar';
 import StyleDictionary from 'style-dictionary';
+import { fileHeader } from './fileHeader.js';
 
 StyleDictionary.registerTransform({
     name: 'ts/size/lineheight',
@@ -134,12 +135,24 @@ function buildAll() {
                 css: {
                     transformGroup: 'custom/css',
                     buildPath: newBuildPath,
-                    files: [{ destination: 'variables.css', format: 'css/variables' }]
+                    files: [{
+                        destination: 'variables.css',
+                        format: 'css/variables',
+                        options: {
+                            fileHeader: () => fileHeader(),
+                        },
+                    }]
                 },
                 android: {
                     transformGroup: 'custom/android',
                     buildPath: newBuildPath,
-                    files: [{ destination: 'tokens.xml', format: 'android/resources' }]
+                    files: [{
+                        destination: 'tokens.xml',
+                        format: 'android/resources',
+                        options: {
+                            fileHeader: () => fileHeader(),
+                        },
+                    }]
                 },
                 ios: {
                     transformGroup: 'custom/ios-swift',
@@ -148,7 +161,10 @@ function buildAll() {
                         destination: 'StyleDictionary.swift',
                         format: 'ios-swift/class.swift',
                         className: 'StyleDictionary',
-                        type: 'class'
+                        type: 'class',
+                        options: {
+                            fileHeader: () => fileHeader(),
+                        },
                     }]
                 }
             }

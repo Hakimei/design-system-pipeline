@@ -3,7 +3,7 @@
 // StyleDictionary.swift
 //
 
-// Do not edit directly, this file was auto-generated.
+// Do not edit — auto-generated on Sun, 07 Sept 2025, 10:28:20 GMT+7
 
 
 import SwiftUI
@@ -21,7 +21,7 @@ public class {
     public static let spacingButtonPadding = CGFloat(12.00)
     public static let typographyFontSizesBody = CGFloat(16.00)
     public static let typographyFontSizesHeading = CGFloat(24.00)
-    public static let typographyFontWeightsBody = 600
+    public static let typographyFontWeightsBody = 500
     public static let typographyFontWeightsHeading = 700
     public static let typographyLineHeightsBody = 1.5
     public static let typographyLineHeightsHeading = 1.3
