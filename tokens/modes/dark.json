@@ -8,7 +8,7 @@
     },
     "text": {
       "primary": {
-        "value": "#F9F9F9",
+        "value": "{color.white}",
         "type": "color"
       }
     }

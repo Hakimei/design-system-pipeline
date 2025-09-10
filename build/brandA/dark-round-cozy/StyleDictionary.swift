@@ -3,7 +3,7 @@
 // StyleDictionary.swift
 //
 
-// Do not edit — auto-generated on Sun, 07 Sept 2025, 12:53:13 GMT+7
+// Do not edit — auto-generated on Wed, 10 Sept 2025, 23:34:18 GMT+7
 
 
 import SwiftUI
@@ -20,7 +20,7 @@ public class {
     public static let colorsBrandSecondary = UIColor(red: 0.949, green: 0.949, blue: 0.949, alpha: 1)
     public static let colorsButtonPrimaryBackground = UIColor(red: 0.867, green: 0.404, blue: 0.188, alpha: 1)
     public static let colorsButtonPrimaryText = UIColor(red: 0.949, green: 0.949, blue: 0.949, alpha: 1)
-    public static let colorsTextPrimary = UIColor(red: 0.976, green: 0.976, blue: 0.976, alpha: 1)
+    public static let colorsTextPrimary = #FFFFFF
 
     // Semantic spacing
     public static let spacingButtonPadding = CGFloat(24.00)

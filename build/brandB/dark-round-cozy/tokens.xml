@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  Do not edit — auto-generated on Sun, 07 Sept 2025, 12:53:13 GMT+7
+  Do not edit — auto-generated on Wed, 10 Sept 2025, 23:34:18 GMT+7
 -->
 <resources>
   <!-- semantic color -->
   <color name="colors_brand_primary">#ffe54666</color>
   <color name="colors_brand_secondary">#fff9f9f9</color>
   <color name="colors_background_primary">#ff181818</color>
-  <color name="colors_text_primary">#fff9f9f9</color>
+  <color name="colors_text_primary">#FFFFFF</color>
   <color name="colors_button_primary_background">#ffe54666</color>
   <color name="colors_button_primary_text">#fff9f9f9</color>
 
