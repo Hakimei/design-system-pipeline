@@ -1,13 +1,13 @@
 {
-  "colors": {
+  "color": {
     "button": {
       "primary": {
         "background": {
-          "value": "{colors.brand.primary}",
+          "value": "{color.brand.primary}",
           "type": "color"
         },
         "text": {
-          "value": "{colors.brand.secondary}",
+          "value": "{color.brand.secondary}",
           "type": "color"
         }
       }

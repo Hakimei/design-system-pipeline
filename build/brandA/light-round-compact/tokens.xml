@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  Do not edit — auto-generated on Wed, 10 Sept 2025, 23:34:18 GMT+7
+  Do not edit — auto-generated on Wed, 17 Sept 2025, 10:42:11 GMT+7
 -->
 <resources>
-  <!-- semantic color -->
-  <color name="colors_brand_primary">#ffdd6730</color>
-  <color name="colors_brand_secondary">#fff2f2f2</color>
-  <color name="colors_background_primary">#fff9f9f9</color>
-  <color name="colors_text_primary">#ff222222</color>
-  <color name="colors_button_primary_background">#ffdd6730</color>
-  <color name="colors_button_primary_text">#fff2f2f2</color>
-
-  <!-- semantic border radius -->
+  <string name="color_white">#FFFFFF</string>
+  <string name="color_black">#181818</string>
+  <string name="color_neutral_100">#f9f9f9</string>
+  <string name="color_neutral_200">#e0e0e0</string>
+  <string name="color_neutral_800">#222222</string>
+  <string name="color_neutral_900">#1d1d1d</string>
+  <color name="color_brand_primary">#ffdd6730</color>
+  <color name="color_brand_secondary">#fff2f2f2</color>
+  <color name="color_background_primary">@color/color_neutral_100</color>
+  <color name="color_text_primary">@color/color_black</color>
+  <color name="color_button_primary_background">@color/color_brand_primary</color>
+  <color name="color_button_primary_text">@color/color_brand_secondary</color>
+  <dimen name="typography_font_sizes_heading">24.00dp</dimen>
+  <dimen name="typography_font_sizes_body">16.00dp</dimen>
+  <string name="typography_font_weights_heading">700</string>
+  <string name="typography_font_weights_body">500</string>
+  <string name="typography_line_heights_heading">1.3</string>
+  <string name="typography_line_heights_body">1.5</string>
   <dimen name="border_radius_small">4.00dp</dimen>
   <dimen name="border_radius_medium">6.00dp</dimen>
   <dimen name="border_radius_large">8.00dp</dimen>
-
-  <!-- semantic spacing -->
   <dimen name="spacing_button_padding">12.00dp</dimen>
-
 </resources>

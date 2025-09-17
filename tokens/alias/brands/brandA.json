@@ -1,12 +1,12 @@
 {
-  "colors": {
+  "color": {
     "brand": {
       "primary": {
-        "value": "#E54666",
+        "value": "#DD6730",
         "type": "color"
       },
       "secondary": {
-        "value": "#F9F9F9",
+        "value": "#F2F2F2",
         "type": "color"
       }
     }

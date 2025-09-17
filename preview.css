@@ -1,6 +1,6 @@
 body {
-  background: var(--colors-background-primary);
-  color: var(--colors-text-primary);
+  background: var(--color-background-primary);
+  color: var(--color-text-primary);
   font-size: var(--typography-font-sizes-heading);
   font-weight: var(--typography-font-weights-heading);
   line-height: var(--typography-line-heights-heading);
@@ -13,8 +13,8 @@ body {
     This decouples the component's internal styling from the global token names,
     making it more modular and maintainable.
   */
-  --btn-color-submit: var(--colors-button-primary-background);
-  --btn-color-text: var(--colors-button-primary-text);
+  --btn-color-submit: var(--color-button-primary-background);
+  --btn-color-text: var(--color-button-primary-text);
   --btn-font-size-body: var(--typography-font-sizes-body);
   --btn-font-size-weight: var(--typography-font-weights-body);
   --btn-spacing-padding: var(--spacing-button-padding) var(--spacing-button-padding);

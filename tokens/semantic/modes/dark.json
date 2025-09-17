@@ -1,8 +1,8 @@
 {
-  "colors": {
+  "color": {
     "background": {
       "primary": {
-        "value": "#181818",
+        "value": "{color.black}",
         "type": "color"
       }
     },

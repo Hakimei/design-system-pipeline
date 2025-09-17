@@ -61,21 +61,31 @@ async function loadTokens() {
 
     // --- 1. Build Base Primitives ---
     console.log('\nBuilding base primitive tokens...');
+    const aliasDir = path.join(tokensDir, 'alias');
     const primitivesDir = path.join(tokensDir, 'primitives');
-    const primitiveFiles = (await fs.readdir(primitivesDir)).filter(file => file.endsWith('.json')).map(file => path.join(primitivesDir, file));
 
-    const primitiveTokens = await primitiveFiles.reduce(async (accPromise, file) => {
+    const aliasFilesPaths = (await fs.readdir(aliasDir)).filter(file => file.endsWith('.json')).map(file => path.join(aliasDir, file));
+    const primitiveFilesPaths = (await fs.readdir(primitivesDir)).filter(file => file.endsWith('.json')).map(file => path.join(primitivesDir, file));
+    const allBaseFiles = [...aliasFilesPaths, ...primitiveFilesPaths];
+
+    const aliasTokens = await aliasFilesPaths.reduce(async (accPromise, file) => {
         const acc = await accPromise;
         return mergeDeep(acc, JSON.parse(await fs.readFile(file, 'utf8')));
     }, Promise.resolve({}));
 
-    const brands = await readJsonFilesFromDir(path.join(tokensDir, 'brands'));
-    const modes = await readJsonFilesFromDir(path.join(tokensDir, 'modes'));
-    const shapes = await readJsonFilesFromDir(path.join(tokensDir, 'shapes'));
-    const densities = await readJsonFilesFromDir(path.join(tokensDir, 'densities'));
+    const primitiveTokens = await primitiveFilesPaths.reduce(async (accPromise, file) => {
+        const acc = await accPromise;
+        return mergeDeep(acc, JSON.parse(await fs.readFile(file, 'utf8')));
+    }, Promise.resolve({}));
+
+
+    const brands = await readJsonFilesFromDir(path.join(tokensDir, 'alias', 'brands'));
+    const modes = await readJsonFilesFromDir(path.join(tokensDir, 'semantic', 'modes'));
+    const shapes = await readJsonFilesFromDir(path.join(tokensDir, 'semantic', 'shapes'));
+    const densities = await readJsonFilesFromDir(path.join(tokensDir, 'semantic', 'densities'));
 
     const componentsDir = path.join(tokensDir, 'components');
-    const componentFiles = (await fs.readdir(componentsDir)).filter(file => file.endsWith('.json'));
+    const componentFiles = (await fs.readdir(componentsDir)).filter(file => file.endsWith('.json')); // This is correct
     const componentTokens = await componentFiles.reduce(async (accPromise, file) => {
         const acc = await accPromise;
         const componentPath = path.join(componentsDir, file);
@@ -84,11 +94,11 @@ async function loadTokens() {
         return mergeDeep(acc, componentTokenData);
     }, Promise.resolve({}));
 
-    return { primitiveTokens, primitiveFiles, brands, modes, shapes, densities, componentTokens };
+    return { primitiveTokens, aliasTokens, allBaseFiles, primitiveFilesPaths, brands, modes, shapes, densities, componentTokens };
 }
 
 async function buildThemes(tokenData) {
-    const { primitiveTokens, brands, modes, shapes, densities, componentTokens } = tokenData;
+    const { primitiveTokens, aliasTokens, brands, modes, shapes, densities, componentTokens, allBaseFiles } = tokenData;
     const buildDir = './build';
     const themesIndex = {};
 
@@ -98,7 +108,8 @@ async function buildThemes(tokenData) {
             for (const [shapeName, shapeTokens] of Object.entries(shapes)) {
                 for (const [densityName, densityTokens] of Object.entries(densities)) {
 
-                    let merged = mergeDeep(primitiveTokens, brandTokens);
+                    let merged = mergeDeep(primitiveTokens, aliasTokens);
+                    merged = mergeDeep(merged, brandTokens);
                     merged = mergeDeep(merged, modeTokens);
                     merged = mergeDeep(merged, shapeTokens);
                     merged = mergeDeep(merged, densityTokens);
@@ -127,7 +138,7 @@ async function buildThemes(tokenData) {
 
                     const finalTokens = JSON.parse(JSON.stringify(merged)); // Deep copy
                     addMetadata(finalTokens, primitiveTokens, true);
-                    [brandTokens, modeTokens, shapeTokens, densityTokens, componentTokens].forEach(tokenSet => {
+                    [aliasTokens, brandTokens, modeTokens, shapeTokens, densityTokens, componentTokens].forEach(tokenSet => {
                         addMetadata(finalTokens, tokenSet, false);
                     });
 
@@ -159,6 +170,7 @@ function buildBase(primitiveFiles) {
                     format: 'css/variables',
                     options: {
                         fileHeader: () => fileHeader(),
+                        outputReferences: false,
                     },
                 }]
             },
@@ -170,6 +182,7 @@ function buildBase(primitiveFiles) {
                     format: 'android/resources',
                     options: {
                         fileHeader: () => fileHeader(),
+                        outputReferences: false,
                     },
                 }]
             },
@@ -181,6 +194,7 @@ function buildBase(primitiveFiles) {
                     format: 'ios-swift/class.swift',
                     options: {
                         fileHeader: () => fileHeader(),
+                        outputReferences: false,
                     },
                 }]
             }
@@ -208,6 +222,7 @@ function buildThemePlatforms(themesIndex) {
                         format: 'css/variables',
                         options: {
                             fileHeader: () => fileHeader(),
+                            outputReferences: true,
                         },
                         // Exclude primitive tokens to avoid duplication with the base file
                         filter: (token) => !token.attributes.isPrimitive,
@@ -221,6 +236,7 @@ function buildThemePlatforms(themesIndex) {
                         format: 'android/resources',
                         options: {
                             fileHeader: () => fileHeader(),
+                            outputReferences: true,
                         },
                         // Exclude primitive tokens to avoid duplication with the base file
                         filter: (token) => !token.attributes.isPrimitive,
@@ -235,6 +251,7 @@ function buildThemePlatforms(themesIndex) {
                         className: 'StyleDictionary',
                         options: {
                             fileHeader: () => fileHeader(),
+                            outputReferences: true,
                         },
                         // Exclude primitive tokens to avoid duplication with the base file
                         filter: (token) => !token.attributes.isPrimitive,
@@ -248,227 +265,6 @@ function buildThemePlatforms(themesIndex) {
     });
 }
 
-/**
- * This function adds comments to CSS files to group custom properties.
- */
-async function addCommentsToCss() {
-    console.log('\n✏️  Adding comments to generated CSS files...');
-
-    // Mapping of custom property prefixes to their desired comment.
-    const tokenGroupComments = {
-        'color-': 'primitive color',
-        'typography-': 'primitive typography',
-        'colors-': 'semantic color',
-        'border-radius-': 'semantic border radius',
-        'spacing-': 'semantic spacing',
-    };
-
-    const cssFiles = await glob('build/**/variables.css');
-
-    if (cssFiles.length === 0) {
-        console.warn('⚠️ No "variables.css" files found to add comments to.');
-        return;
-    }
-
-    for (const filePath of cssFiles) {
-        try {
-            const content = await fs.readFile(filePath, 'utf-8');
-            const lines = content.split('\n');
-            const newLines = [];
-            let inRootBlock = false;
-            let lastMatchedPrefix = null;
-
-            for (const line of lines) {
-                if (line.trim() === ':root {') {
-                    inRootBlock = true;
-                    newLines.push(line);
-                    continue;
-                }
-
-                if (line.trim() === '}') {
-                    inRootBlock = false;
-                    // Add a newline before the closing brace if the last line wasn't empty
-                    if (newLines.length > 0 && newLines[newLines.length - 1].trim() !== '') {
-                        newLines.push('');
-                    }
-                    newLines.push(line);
-                    continue;
-                }
-
-                if (inRootBlock && line.trim().startsWith('--')) {
-                    const cssVariable = line.trim().split(':')[0]; // e.g., --color-white
-                    let currentPrefix = null;
-
-                    // Find which group the variable belongs to
-                    for (const prefix in tokenGroupComments) {
-                        if (cssVariable.startsWith(`--${prefix}`)) {
-                            currentPrefix = prefix;
-                            break;
-                        }
-                    }
-
-                    // If this is a new group, add the comment
-                    if (currentPrefix && currentPrefix !== lastMatchedPrefix) {
-                        // Add a blank line for separation before the new group comment
-                        if (lastMatchedPrefix !== null) {
-                            newLines.push('');
-                        }
-                        newLines.push(`  /* ${tokenGroupComments[currentPrefix]} */`);
-                        lastMatchedPrefix = currentPrefix;
-                    }
-                }
-                newLines.push(line);
-            }
-
-            const newContent = newLines.join('\n');
-            await fs.writeFile(filePath, newContent, 'utf-8');
-        } catch (error) {
-            console.error(`❌ Error processing ${filePath}:`, error);
-        }
-    }
-    console.log(`✅ Comments added to ${cssFiles.length} CSS file(s).`);
-}
-
-/**
- * This function adds comments to XML files to group resources.
- */
-async function addCommentsToXml() {
-    console.log('\n✏️  Adding comments to generated XML files...');
-
-    // Mapping of resource name prefixes to their desired comment.
-    // These prefixes correspond to the token names after the 'name/android/snake' transform.
-    const tokenGroupComments = {
-        'color_': 'primitive color',
-        'typography_': 'primitive typography',
-        'colors_': 'semantic color',
-        'border_radius_': 'semantic border radius',
-        'spacing_': 'semantic spacing',
-    };
-
-    const xmlFiles = await glob('build/**/*.xml');
-
-    if (xmlFiles.length === 0) {
-        console.warn('⚠️ No ".xml" files found to add comments to.');
-        return;
-    }
-
-    for (const filePath of xmlFiles) {
-        try {
-            const content = await fs.readFile(filePath, 'utf-8');
-            const lines = content.split('\n');
-            const newLines = [];
-            let inResourcesBlock = false;
-            let lastMatchedPrefix = null;
-
-            for (const line of lines) {
-                if (line.trim().startsWith('<resources')) {
-                    inResourcesBlock = true;
-                    newLines.push(line);
-                    continue;
-                }
-
-                if (line.trim() === '</resources>') {
-                    inResourcesBlock = false;
-                    if (newLines.length > 0 && newLines[newLines.length - 1].trim() !== '') {
-                        newLines.push('');
-                    }
-                    newLines.push(line);
-                    continue;
-                }
-
-                if (inResourcesBlock && line.trim().startsWith('<')) {
-                    const nameMatch = line.match(/name="([^"]+)"/);
-                    if (nameMatch) {
-                        const resourceName = nameMatch[1]; // e.g., color_white
-                        const currentPrefix = Object.keys(tokenGroupComments).find(p => resourceName.startsWith(p));
-
-                        if (currentPrefix && currentPrefix !== lastMatchedPrefix) {
-                            if (lastMatchedPrefix !== null) newLines.push('');
-                            newLines.push(`  <!-- ${tokenGroupComments[currentPrefix]} -->`);
-                            lastMatchedPrefix = currentPrefix;
-                        }
-                    }
-                }
-                newLines.push(line);
-            }
-
-            await fs.writeFile(filePath, newLines.join('\n'), 'utf-8');
-        } catch (error) {
-            console.error(`❌ Error processing ${filePath}:`, error);
-        }
-    }
-    console.log(`✅ Comments added to ${xmlFiles.length} XML file(s).`);
-}
-
-/**
- * This function adds comments to Swift files to group token properties.
- */
-async function addCommentsToSwift() {
-    console.log('\n✏️  Adding comments to generated Swift files...');
-
-    // Mapping of property name prefixes to their desired comment.
-    // These prefixes correspond to the token names after the 'name/cti/camel' transform.
-    const tokenGroupComments = {
-        'color': 'Primitive color',
-        'typography': 'Primitive typography',
-        'colors': 'Semantic color',
-        'borderRadius': 'Semantic border radius',
-        'spacing': 'Semantic spacing',
-    };
-
-    // Find all StyleDictionary.swift files in the build directory
-    const swiftFiles = await glob('build/**/StyleDictionary.swift');
-
-    if (swiftFiles.length === 0) {
-        console.warn('⚠️ No "StyleDictionary.swift" files found to add comments to.');
-        return;
-    }
-
-    for (const filePath of swiftFiles) {
-        try {
-            const content = await fs.readFile(filePath, 'utf-8');
-            const lines = content.split('\n');
-            const newLines = [];
-            let inClassBlock = false;
-            let lastMatchedPrefix = null;
-
-            for (const line of lines) {
-                if (line.trim().startsWith('public class')) {
-                    inClassBlock = true;
-                    newLines.push(line);
-                    continue;
-                }
-
-                if (inClassBlock && line.trim() === '}') {
-                    inClassBlock = false;
-                    if (newLines.length > 0 && newLines[newLines.length - 1].trim() !== '') newLines.push('');
-                    newLines.push(line);
-                    continue;
-                }
-
-                if (inClassBlock && line.trim().startsWith('public static let')) {
-                    const nameMatch = line.match(/public static let (\w+)/);
-                    if (nameMatch) {
-                        const propertyName = nameMatch[1]; // e.g., colorBlack
-                        const currentPrefix = Object.keys(tokenGroupComments).find(p => propertyName.startsWith(p));
-
-                        if (currentPrefix && currentPrefix !== lastMatchedPrefix) {
-                            if (lastMatchedPrefix !== null) newLines.push('');
-                            newLines.push(`    // ${tokenGroupComments[currentPrefix]}`);
-                            lastMatchedPrefix = currentPrefix;
-                        }
-                    }
-                }
-                newLines.push(line);
-            }
-            await fs.writeFile(filePath, newLines.join('\n'), 'utf-8');
-        } catch (error) {
-            console.error(`❌ Error processing ${filePath}:`, error);
-        }
-    }
-    console.log(`✅ Comments added to ${swiftFiles.length} Swift file(s).`);
-}
-
 async function buildAll() {
     const buildDir = './build';
     console.log('\n🔄 Rebuilding tokens for ALL brands & platforms...');
@@ -477,11 +273,8 @@ async function buildAll() {
     const tokenData = await loadTokens();
     const themesIndex = await buildThemes(tokenData);
 
-    buildBase(tokenData.primitiveFiles);
+    buildBase(tokenData.primitiveFilesPaths);
     buildThemePlatforms(themesIndex);
-    await addCommentsToCss();
-    await addCommentsToXml();
-    await addCommentsToSwift();
 
     console.log(`🎉 Build complete!`);
 }

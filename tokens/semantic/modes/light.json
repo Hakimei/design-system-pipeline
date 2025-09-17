@@ -1,14 +1,14 @@
 {
-  "colors": {
+  "color": {
     "background": {
       "primary": {
-        "value": "#F9F9F9",
+        "value": "{color.neutral.100}",
         "type": "color"
       }
     },
     "text": {
       "primary": {
-        "value": "#222222",
+        "value": "{color.black}",
         "type": "color"
       }
     }
