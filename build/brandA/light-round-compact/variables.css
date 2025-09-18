@@ -1,6 +1,6 @@
 /**
  * Do not edit — auto-generated
- * on Thu, 18 Sept 2025, 20:27:48 GMT+7
+ * on Thu, 18 Sept 2025, 21:06:20 GMT+7
  * 
  * Brand: brandA
  * Mode: light
@@ -10,17 +10,17 @@
 
 :root {
   --color-white: #FFFFFF;
-  --color-black: #181818;
+  --color-dark: #181818;
   --color-neutral-100: #f9f9f9;
   --color-neutral-200: #e0e0e0;
   --color-neutral-800: #222222;
   --color-neutral-900: #1d1d1d;
   --color-brand-primary: #dd6730;
-  --color-brand-secondary: #f2f2f2;
   --color-background-primary: #f9f9f9;
   --color-text-primary: #181818;
   --color-button-primary-background: #dd6730;
-  --color-button-primary-text: #f2f2f2;
+  --color-button-primary-text: #f9f9f9;
+  --typography-font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   --typography-font-sizes-heading: 1.5rem;
   --typography-font-sizes-body: 1rem;
   --typography-font-weights-heading: 700;

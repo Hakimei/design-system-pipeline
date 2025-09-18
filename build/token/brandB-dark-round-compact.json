@@ -12,7 +12,7 @@
         "isPrimitive": false
       }
     },
-    "black": {
+    "dark": {
       "value": "#181818",
       "attributes": {
         "isPrimitive": false
@@ -51,18 +51,11 @@
         "attributes": {
           "isPrimitive": false
         }
-      },
-      "secondary": {
-        "value": "#F9F9F9",
-        "type": "color",
-        "attributes": {
-          "isPrimitive": false
-        }
       }
     },
     "background": {
       "primary": {
-        "value": "{color.black}",
+        "value": "{color.dark}",
         "type": "color",
         "attributes": {
           "isPrimitive": false
@@ -88,7 +81,7 @@
           }
         },
         "text": {
-          "value": "{color.brand.secondary}",
+          "value": "#f9f9f9",
           "type": "color",
           "attributes": {
             "isPrimitive": false
@@ -98,6 +91,13 @@
     }
   },
   "typography": {
+    "fontFamily": {
+      "value": "'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+      "type": "fontFamilies",
+      "attributes": {
+        "isPrimitive": false
+      }
+    },
     "fontSizes": {
       "heading": {
         "value": "24px",

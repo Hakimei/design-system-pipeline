@@ -4,10 +4,6 @@
       "primary": {
         "value": "#DD6730",
         "type": "color"
-      },
-      "secondary": {
-        "value": "#F2F2F2",
-        "type": "color"
       }
     }
   }

@@ -2,7 +2,7 @@
   "color": {
     "background": {
       "primary": {
-        "value": "{color.black}",
+        "value": "{color.dark}",
         "type": "color"
       }
     },

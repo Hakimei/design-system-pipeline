@@ -1,6 +1,7 @@
 body {
   background: var(--color-background-primary);
   color: var(--color-text-primary);
+  font-family: var(--typography-font-family);
   font-size: var(--typography-font-sizes-heading);
   font-weight: var(--typography-font-weights-heading);
   line-height: var(--typography-line-heights-heading);

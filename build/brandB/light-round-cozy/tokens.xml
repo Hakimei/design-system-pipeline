@@ -2,7 +2,7 @@
 
 <!--
   Do not edit — auto-generated
-  on Thu, 18 Sept 2025, 20:27:48 GMT+7
+  on Thu, 18 Sept 2025, 21:06:20 GMT+7
   
   Brand: brandB
   Mode: light
@@ -11,17 +11,17 @@
 -->
 <resources>
   <string name="color_white">#FFFFFF</string>
-  <string name="color_black">#181818</string>
+  <string name="color_dark">#181818</string>
   <string name="color_neutral_100">#f9f9f9</string>
   <string name="color_neutral_200">#e0e0e0</string>
   <string name="color_neutral_800">#222222</string>
   <string name="color_neutral_900">#1d1d1d</string>
   <color name="color_brand_primary">#ffe54666</color>
-  <color name="color_brand_secondary">#fff9f9f9</color>
   <color name="color_background_primary">#f9f9f9</color>
   <color name="color_text_primary">#181818</color>
   <color name="color_button_primary_background">#ffe54666</color>
   <color name="color_button_primary_text">#fff9f9f9</color>
+  <string name="typography_font_family">'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'</string>
   <dimen name="typography_font_sizes_heading">24.00dp</dimen>
   <dimen name="typography_font_sizes_body">16.00dp</dimen>
   <string name="typography_font_weights_heading">700</string>
