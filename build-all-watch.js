@@ -227,7 +227,7 @@ function buildThemePlatforms(themesIndex) {
                                 `Shape: ${shape}`,
                                 `Density: ${density}`,
                             ]),
-                            outputReferences: true,
+                            outputReferences: false,
                         },
                         // Exclude primitive tokens to avoid duplication with the base file
                         filter: (token) => !token.attributes.isPrimitive,
@@ -246,7 +246,7 @@ function buildThemePlatforms(themesIndex) {
                                 `Shape: ${shape}`,
                                 `Density: ${density}`,
                             ]),
-                            outputReferences: true,
+                            outputReferences: false,
                         },
                         // Exclude primitive tokens to avoid duplication with the base file
                         filter: (token) => !token.attributes.isPrimitive,
@@ -266,7 +266,7 @@ function buildThemePlatforms(themesIndex) {
                                 `Shape: ${shape}`,
                                 `Density: ${density}`,
                             ]),
-                            outputReferences: true,
+                            outputReferences: false,
                         },
                         // Exclude primitive tokens to avoid duplication with the base file
                         filter: (token) => !token.attributes.isPrimitive,
