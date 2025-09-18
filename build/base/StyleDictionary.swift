@@ -3,7 +3,10 @@
 // StyleDictionary.swift
 //
 
-// Do not edit — auto-generated on Wed, 17 Sept 2025, 10:42:11 GMT+7
+// Do not edit — auto-generated
+// on Thu, 18 Sept 2025, 18:07:13 GMT+7
+// 
+// Contains: primitive tokens
 
 
 import SwiftUI

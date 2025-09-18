@@ -3,7 +3,13 @@
 // StyleDictionary.swift
 //
 
-// Do not edit — auto-generated on Wed, 17 Sept 2025, 10:42:11 GMT+7
+// Do not edit — auto-generated
+// on Thu, 18 Sept 2025, 18:07:14 GMT+7
+// 
+// Brand: brandB
+// Mode: dark
+// Shape: round
+// Density: compact
 
 
 import SwiftUI

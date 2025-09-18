@@ -1,10 +1,12 @@
 /**
  * Returns file header content with a timestamp.
  * Style Dictionary will wrap this in the appropriate comment style.
- * @returns {string[]}
+ * @param {string[]} [comments=[]] - An array of strings to add as comments.
+ * @returns {string[]} - An array of strings for the file header.
  */
-export function fileHeader() {
+export function fileHeader(comments = []) {
   // Style-dictionary expects an array of strings for the file header.
+  const header = [`Do not edit — auto-generated`];
   const date = new Date();
   const options = {
     timeZone: 'Asia/Bangkok', // GMT+7
@@ -18,5 +20,11 @@ export function fileHeader() {
     hour12: false,
     timeZoneName: 'shortOffset',
   };
-  return [`Do not edit — auto-generated on ${date.toLocaleString('en-GB', options)}`];
+  header.push(`on ${date.toLocaleString('en-GB', options)}`);
+
+  if (comments.length > 0) {
+    header.push('', ...comments);
+  }
+
+  return header;
 }

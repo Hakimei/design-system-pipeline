@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  Do not edit — auto-generated on Wed, 17 Sept 2025, 10:42:11 GMT+7
+  Do not edit — auto-generated
+  on Thu, 18 Sept 2025, 18:07:14 GMT+7
+  
+  Brand: brandB
+  Mode: light
+  Shape: rectangle
+  Density: cozy
 -->
 <resources>
   <string name="color_white">#FFFFFF</string>

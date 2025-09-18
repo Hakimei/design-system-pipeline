@@ -3,7 +3,6 @@ import path from 'path';
 import chokidar from 'chokidar';
 import StyleDictionary from 'style-dictionary';
 import { fileHeader } from './fileHeader.js';
-import { glob } from 'glob';
 
 StyleDictionary.registerTransform({
     name: 'ts/size/lineheight',
@@ -169,7 +168,7 @@ function buildBase(primitiveFiles) {
                     destination: 'variables.css',
                     format: 'css/variables',
                     options: {
-                        fileHeader: () => fileHeader(),
+                        fileHeader: () => fileHeader(['Contains: primitive tokens']),
                         outputReferences: false,
                     },
                 }]
@@ -181,7 +180,7 @@ function buildBase(primitiveFiles) {
                     destination: 'tokens.xml',
                     format: 'android/resources',
                     options: {
-                        fileHeader: () => fileHeader(),
+                        fileHeader: () => fileHeader(['Contains: primitive tokens']),
                         outputReferences: false,
                     },
                 }]
@@ -193,7 +192,7 @@ function buildBase(primitiveFiles) {
                     destination: 'StyleDictionary.swift',
                     format: 'ios-swift/class.swift',
                     options: {
-                        fileHeader: () => fileHeader(),
+                        fileHeader: () => fileHeader(['Contains: primitive tokens']),
                         outputReferences: false,
                     },
                 }]
@@ -207,7 +206,8 @@ function buildBase(primitiveFiles) {
 function buildThemePlatforms(themesIndex) {
     const buildDir = './build';
     Object.entries(themesIndex).forEach(([themeName, filePath]) => {
-        const [brand, ...rest] = themeName.split('-');
+        const [brand, mode, shape, density] = themeName.split('-');
+        const rest = [mode, shape, density];
         const subTheme = rest.join('-');
         const newBuildPath = `${buildDir}/${brand}/${subTheme}/`;
 
@@ -221,7 +221,12 @@ function buildThemePlatforms(themesIndex) {
                         destination: 'variables.css',
                         format: 'css/variables',
                         options: {
-                            fileHeader: () => fileHeader(),
+                            fileHeader: () => fileHeader([
+                                `Brand: ${brand}`,
+                                `Mode: ${mode}`,
+                                `Shape: ${shape}`,
+                                `Density: ${density}`,
+                            ]),
                             outputReferences: true,
                         },
                         // Exclude primitive tokens to avoid duplication with the base file
@@ -235,7 +240,12 @@ function buildThemePlatforms(themesIndex) {
                         destination: 'tokens.xml',
                         format: 'android/resources',
                         options: {
-                            fileHeader: () => fileHeader(),
+                            fileHeader: () => fileHeader([
+                                `Brand: ${brand}`,
+                                `Mode: ${mode}`,
+                                `Shape: ${shape}`,
+                                `Density: ${density}`,
+                            ]),
                             outputReferences: true,
                         },
                         // Exclude primitive tokens to avoid duplication with the base file
@@ -250,7 +260,12 @@ function buildThemePlatforms(themesIndex) {
                         format: 'ios-swift/class.swift',
                         className: 'StyleDictionary',
                         options: {
-                            fileHeader: () => fileHeader(),
+                            fileHeader: () => fileHeader([
+                                `Brand: ${brand}`,
+                                `Mode: ${mode}`,
+                                `Shape: ${shape}`,
+                                `Density: ${density}`,
+                            ]),
                             outputReferences: true,
                         },
                         // Exclude primitive tokens to avoid duplication with the base file
