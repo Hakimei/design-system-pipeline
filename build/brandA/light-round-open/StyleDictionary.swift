@@ -1,40 +1,35 @@
+/*
+ * Do not edit — auto-generated
+ * on Tue, 23 Sept 2025, 20:08:59 GMT+7
+ * 
+ * Brand: brandA
+ * Mode: light
+ * Shape: round
+ * Density: open
+ */
 
-//
-// StyleDictionary.swift
-//
+import UIKit
 
-// Do not edit — auto-generated
-// on Thu, 18 Sept 2025, 21:06:20 GMT+7
-// 
-// Brand: brandA
-// Mode: light
-// Shape: round
-// Density: open
-
-
-import SwiftUI
-
-public class {
-    public static let borderRadiusLarge = CGFloat(8.00)
-    public static let borderRadiusMedium = CGFloat(6.00)
-    public static let borderRadiusSmall = CGFloat(4.00)
-    public static let colorBackgroundPrimary = #f9f9f9
-    public static let colorBrandPrimary = UIColor(red: 0.867, green: 0.404, blue: 0.188, alpha: 1)
-    public static let colorButtonPrimaryBackground = UIColor(red: 0.867, green: 0.404, blue: 0.188, alpha: 1)
+public struct Tokens {
+    public static let colorWhite = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1)
+    public static let colorDark = UIColor(red: 0.094, green: 0.094, blue: 0.094, alpha: 1)
+    public static let colorNeutral100 = UIColor(red: 0.976, green: 0.976, blue: 0.976, alpha: 1)
+    public static let colorNeutral800 = UIColor(red: 0.133, green: 0.133, blue: 0.133, alpha: 1)
+    public static let colorNeutral900 = UIColor(red: 0.114, green: 0.114, blue: 0.114, alpha: 1)
+    public static let colorBrandPrimary = UIColor(red: 0.227, green: 0.376, blue: 0.663, alpha: 1) // source: {color.2}
+    public static let colorBackgroundPrimary = UIColor(red: 0.976, green: 0.976, blue: 0.976, alpha: 1) // source: {color.neutral.100}
+    public static let colorTextPrimary = UIColor(red: 0.094, green: 0.094, blue: 0.094, alpha: 1) // source: {color.dark}
+    public static let colorButtonPrimaryBackground = UIColor(red: 0.227, green: 0.376, blue: 0.663, alpha: 1) // source: {color.brand.primary}
     public static let colorButtonPrimaryText = UIColor(red: 0.976, green: 0.976, blue: 0.976, alpha: 1)
-    public static let colorDark = #181818
-    public static let colorNeutral100 = #f9f9f9
-    public static let colorNeutral200 = #e0e0e0
-    public static let colorNeutral800 = #222222
-    public static let colorNeutral900 = #1d1d1d
-    public static let colorTextPrimary = #181818
-    public static let colorWhite = #FFFFFF
-    public static let spacingButtonPadding = CGFloat(46.00)
-    public static let typographyFontFamily = 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'
-    public static let typographyFontSizesBody = CGFloat(16.00)
-    public static let typographyFontSizesHeading = CGFloat(24.00)
-    public static let typographyFontWeightsBody = 500
+    public static let typographyFontFamily = 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol' // source: {font.family.sans}
+    public static let typographyFontSizesHeading = CGFloat(18.00) // source: {font.size.18}
+    public static let typographyFontSizesBody = CGFloat(16.00) // source: {font.size.16}
     public static let typographyFontWeightsHeading = 700
-    public static let typographyLineHeightsBody = 1.5
+    public static let typographyFontWeightsBody = 500
     public static let typographyLineHeightsHeading = 1.3
+    public static let typographyLineHeightsBody = 1.5
+    public static let borderRadiusSmall = CGFloat(4.00)
+    public static let borderRadiusMedium = CGFloat(6.00)
+    public static let borderRadiusLarge = CGFloat(8.00)
+    public static let spacingButtonPadding = CGFloat(46.00)
 }

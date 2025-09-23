@@ -2,7 +2,7 @@
   "color": {
     "brand": {
       "primary": {
-        "value": "#DD6730",
+        "value": "{color.2}",
         "type": "color"
       }
     }

@@ -1,5 +1,28 @@
 {
   "color": {
-    "deepblue": { "value": "#1E306E" }
+    "1": {
+      "value": "#d9dee6",
+      "type": "color",
+      "attributes": {
+        "category": "color",
+        "type": "1"
+      }
+    },
+    "2": {
+      "value": "#3a60a9",
+      "type": "color",
+      "attributes": {
+        "category": "color",
+        "type": "2"
+      }
+    },
+    "3": {
+      "value": "#000000",
+      "type": "color",
+      "attributes": {
+        "category": "color",
+        "type": "3"
+      }
+    }
   }
 }

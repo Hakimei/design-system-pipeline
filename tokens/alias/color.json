@@ -1,12 +1,26 @@
 {
   "color": {
-    "white": { "value": "#FFFFFF" },
-    "dark": { "value": "#181818" },
+    "white": {
+      "value": "#FFFFFF",
+      "type": "color"
+    },
+    "dark": {
+      "value": "#181818",
+      "type": "color"
+    },
     "neutral": {
-      "100": { "value": "#f9f9f9" },
-      "200": { "value": "#e0e0e0" },
-      "800": { "value": "#222222" },
-      "900": { "value": "#1d1d1d" }
+      "100": {
+        "value": "#f9f9f9",
+        "type": "color"
+      },
+      "800": {
+        "value": "#222222",
+        "type": "color"
+      },
+      "900": {
+        "value": "#1d1d1d",
+        "type": "color"
+      }
     }
   }
 }

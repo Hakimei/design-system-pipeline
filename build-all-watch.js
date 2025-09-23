@@ -2,7 +2,10 @@ import fs from 'fs/promises';
 import path from 'path';
 import chokidar from 'chokidar';
 import StyleDictionary from 'style-dictionary';
-import { fileHeader } from './fileHeader.js';
+import {
+  registerCustomFormats
+} from './ref-comment.js';
+import { fileHeader } from './header-comment.js';
 
 StyleDictionary.registerTransform({
     name: 'ts/size/lineheight',
@@ -31,6 +34,8 @@ StyleDictionary.registerTransformGroup({
     name: 'custom/ios-swift',
     transforms: ['size/pxToRem'].concat(StyleDictionary.hooks.transformGroups['ios-swift'], ['ts/size/lineheight'])
 });
+
+registerCustomFormats(StyleDictionary);
 
 function mergeDeep(target, source) {
     const output = { ...target, ...source };
@@ -166,10 +171,10 @@ function buildBase(primitiveFiles) {
                 buildPath: baseBuildPath,
                 files: [{
                     destination: 'variables.css',
-                    format: 'css/variables',
+                    format: 'custom/css/variables-with-refs',
                     options: {
                         fileHeader: () => fileHeader(['Contains: primitive tokens']),
-                        outputReferences: false,
+                        outputReferences: true,
                     },
                 }]
             },
@@ -178,10 +183,10 @@ function buildBase(primitiveFiles) {
                 buildPath: baseBuildPath,
                 files: [{
                     destination: 'tokens.xml',
-                    format: 'android/resources',
+                    format: 'custom/android/resources',
                     options: {
                         fileHeader: () => fileHeader(['Contains: primitive tokens']),
-                        outputReferences: false,
+                        outputReferences: true,
                     },
                 }]
             },
@@ -190,10 +195,10 @@ function buildBase(primitiveFiles) {
                 buildPath: baseBuildPath,
                 files: [{
                     destination: 'StyleDictionary.swift',
-                    format: 'ios-swift/class.swift',
+                    format: 'custom/swift/tokens',
                     options: {
                         fileHeader: () => fileHeader(['Contains: primitive tokens']),
-                        outputReferences: false,
+                        outputReferences: true,
                     },
                 }]
             }
@@ -219,7 +224,7 @@ function buildThemePlatforms(themesIndex) {
                     buildPath: newBuildPath,
                     files: [{
                         destination: 'variables.css',
-                        format: 'css/variables',
+                        format: 'custom/css/variables-with-refs',
                         options: {
                             fileHeader: () => fileHeader([
                                 `Brand: ${brand}`,
@@ -227,7 +232,7 @@ function buildThemePlatforms(themesIndex) {
                                 `Shape: ${shape}`,
                                 `Density: ${density}`,
                             ]),
-                            outputReferences: false,
+                            outputReferences: true,
                         },
                         // Exclude primitive tokens to avoid duplication with the base file
                         filter: (token) => !token.attributes.isPrimitive,
@@ -238,7 +243,7 @@ function buildThemePlatforms(themesIndex) {
                     buildPath: newBuildPath,
                     files: [{
                         destination: 'tokens.xml',
-                        format: 'android/resources',
+                        format: 'custom/android/resources',
                         options: {
                             fileHeader: () => fileHeader([
                                 `Brand: ${brand}`,
@@ -257,7 +262,7 @@ function buildThemePlatforms(themesIndex) {
                     buildPath: newBuildPath,
                     files: [{
                         destination: 'StyleDictionary.swift',
-                        format: 'ios-swift/class.swift',
+                        format: 'custom/swift/tokens',
                         className: 'StyleDictionary',
                         options: {
                             fileHeader: () => fileHeader([

@@ -1,0 +1,66 @@
+{
+  "font": {
+    "family": {
+      "sans": {
+        "value": "'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+        "type": "fontFamily",
+        "attributes": {
+          "category": "fontFamily",
+          "type": "family"
+        }
+      }
+    },
+    "size": {
+      "14": {
+        "value": 14,
+        "type": "dimension",
+        "attributes": {
+          "category": "fontSize",
+          "type": "14"
+        }
+      },
+      "16": {
+        "value": 16,
+        "type": "dimension",
+        "attributes": {
+          "category": "fontSize",
+          "type": "16"
+        }
+      },
+      "18": {
+        "value": 18,
+        "type": "dimension",
+        "attributes": {
+          "category": "fontSize",
+          "type": "18"
+        }
+      },
+      "22": {
+        "value": 22,
+        "type": "dimension",
+        "attributes": {
+          "category": "fontSize",
+          "type": "22"
+        }
+      }
+    },
+    "weight": {
+      "regular": {
+        "value": 400,
+        "type": "fontWeight",
+        "attributes": {
+          "category": "fontWeight",
+          "type": "regular"
+        }
+      },
+      "medium": {
+        "value": 500,
+        "type": "fontWeight",
+        "attributes": {
+          "category": "fontWeight",
+          "type": "medium"
+        }
+      }
+    }
+  }
+}

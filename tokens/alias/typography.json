@@ -1,16 +1,16 @@
 {
   "typography": {
     "fontFamily": {
-      "value": "'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+      "value": "{font.family.sans}",
       "type": "fontFamilies"
     },
     "fontSizes": {
       "heading": {
-        "value": "24px",
+        "value": "{font.size.18}",
         "type": "dimension"
       },
       "body": { 
-          "value": "16px",
+          "value": "{font.size.16}",
           "type": "dimension"
       }
     },

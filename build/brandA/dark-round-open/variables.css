@@ -1,28 +1,26 @@
-/**
+/*
  * Do not edit — auto-generated
- * on Thu, 18 Sept 2025, 21:06:20 GMT+7
+ * on Tue, 23 Sept 2025, 20:08:59 GMT+7
  * 
  * Brand: brandA
  * Mode: dark
  * Shape: round
  * Density: open
  */
-
 :root {
-  --color-white: #FFFFFF;
+  --color-white: #ffffff;
   --color-dark: #181818;
   --color-neutral-100: #f9f9f9;
-  --color-neutral-200: #e0e0e0;
   --color-neutral-800: #222222;
   --color-neutral-900: #1d1d1d;
-  --color-brand-primary: #dd6730;
-  --color-background-primary: #181818;
-  --color-text-primary: #FFFFFF;
-  --color-button-primary-background: #dd6730;
+  --color-brand-primary: #3a60a9; /* source: {color.2} */
+  --color-background-primary: var(--color-dark); /* source: {color.dark} */
+  --color-text-primary: var(--color-white); /* source: {color.white} */
+  --color-button-primary-background: var(--color-brand-primary); /* source: {color.brand.primary} */
   --color-button-primary-text: #f9f9f9;
-  --typography-font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-  --typography-font-sizes-heading: 1.5rem;
-  --typography-font-sizes-body: 1rem;
+  --typography-font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; /* source: {font.family.sans} */
+  --typography-font-sizes-heading: 1.125rem; /* source: {font.size.18} */
+  --typography-font-sizes-body: 1rem; /* source: {font.size.16} */
   --typography-font-weights-heading: 700;
   --typography-font-weights-body: 500;
   --typography-line-heights-heading: 1.3;
