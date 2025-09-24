@@ -311,7 +311,7 @@ function buildThemePlatforms(themesIndex) {
                     transformGroup: 'custom/css',
                     buildPath: newBuildPath,
                     files: [{
-                        destination: 'variables.css',
+                        destination: 'web/variables.css',
                         format: 'custom/css/variables-with-refs',
                         options: {
                             fileHeader: () => fileHeader([
@@ -324,7 +324,7 @@ function buildThemePlatforms(themesIndex) {
                         },
                         filter: (token) => !token.attributes.isPrimitive && token.type !== 'typography',
                     }, {
-                        destination: 'styles.css',
+                        destination: 'web/styles.css',
                         format: 'custom/css/typography-classes',
                         options: {
                             fileHeader: () => fileHeader([
@@ -341,7 +341,7 @@ function buildThemePlatforms(themesIndex) {
                     transformGroup: 'custom/android',
                     buildPath: newBuildPath,
                     files: [{
-                        destination: 'variables.xml',
+                        destination: 'android/variables.xml',
                         format: 'custom/android/resources',
                         options: {
                             fileHeader: () => fileHeader([
@@ -355,7 +355,7 @@ function buildThemePlatforms(themesIndex) {
                         // Exclude primitive tokens to avoid duplication with the global file
                         filter: (token) => !token.attributes.isPrimitive && token.type !== 'typography',
                     }, {
-                        destination: 'styles.xml',
+                        destination: 'android/styles.xml',
                         format: 'custom/android/styles',
                         options: {
                             fileHeader: () => fileHeader([
@@ -373,7 +373,7 @@ function buildThemePlatforms(themesIndex) {
                     transformGroup: 'custom/ios-swift',
                     buildPath: newBuildPath,
                     files: [{
-                        destination: 'variables.swift',
+                        destination: 'ios/variables.swift',
                         format: 'custom/swift/tokens',
                         className: 'StyleDictionary',
                         options: {
@@ -388,7 +388,7 @@ function buildThemePlatforms(themesIndex) {
                         // Exclude primitive tokens to avoid duplication with the global file
                         filter: (token) => !token.attributes.isPrimitive && token.type !== 'typography',
                     }, {
-                        destination: 'styles.swift',
+                        destination: 'ios/styles.swift',
                         format: 'custom/swift/textstyles',
                         options: {
                             fileHeader: () => fileHeader([
