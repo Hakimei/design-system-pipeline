@@ -1,0 +1,28 @@
+{
+    "text": {
+        "title": {
+            "type": "typography",
+            "value": {
+            "fontFamily": "{typography.fontFamily}",
+            "fontSize": "{typography.fontSize.heading}",
+            "fontWeight": "{typography.fontWeight.heading}",
+            "letterSpacing": "0",
+            "lineHeight": "{typography.lineHeight.heading}"
+            },
+            "description": "Text style: title"
+        },
+        "body": {
+            "type": "typography",
+            "value": {
+            "fontFamily": "{typography.fontFamily}",
+            "fontSize": "{typography.fontSize.body}",
+            "fontWeight": "{typography.fontWeight.body}",
+            "letterSpacing": "0",
+            "lineHeight": "{typography.lineHeight.body}"
+            },
+            "description": "Text style: body"
+        }
+    }
+}
+
+

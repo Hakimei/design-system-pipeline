@@ -2,12 +2,13 @@ body {
   background: var(--color-background-primary);
   color: var(--color-text-primary);
   font-family: var(--typography-font-family);
-  font-size: var(--typography-font-sizes-heading);
-  font-weight: var(--typography-font-weights-heading);
-  line-height: var(--typography-line-heights-heading);
+  font-size: var(--typography-font-size-heading);
+  font-weight: var(--typography-font-weight-heading);
+  line-height: var(--typography-line-height-heading);
   padding: var(--border-radius-medium);
   transition: background 0.3s ease, color 0.3s ease;
 }
+
 .btn-primary{
   /*
     Component-level aliasing: Map design tokens to component-specific CSS variables.
@@ -16,8 +17,8 @@ body {
   */
   --btn-color-submit: var(--color-button-primary-background);
   --btn-color-text: var(--color-button-primary-text);
-  --btn-font-size-body: var(--typography-font-sizes-body);
-  --btn-font-size-weight: var(--typography-font-weights-body);
+  --btn-font-size-body: var(--typography-font-size-body);
+  --btn-font-size-weight: var(--typography-font-weight-body);
   --btn-spacing-padding: var(--spacing-button-padding) var(--spacing-button-padding);
   --btn-radius-shape: var(--border-radius-medium);
 

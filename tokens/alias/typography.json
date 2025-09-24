@@ -4,27 +4,27 @@
       "value": "{font.family.sans}",
       "type": "fontFamilies"
     },
-    "fontSizes": {
+    "fontSize": {
       "heading": {
-        "value": "{font.size.18}",
+        "value": "{font.size.22}",
         "type": "dimension"
       },
-      "body": { 
-          "value": "{font.size.16}",
-          "type": "dimension"
+      "body": {
+        "value": "{font.size.16}",
+        "type": "dimension"
       }
     },
-    "fontWeights": {
+    "fontWeight": {
       "heading": {
-        "value": "700",
+        "value": "{font.weight.medium}",
         "type": "fontWeights"
       },
       "body": {
-        "value": "500",
+        "value": "{font.weight.regular}",
         "type": "fontWeights"
       }
     },
-    "lineHeights": {
+    "lineHeight": {
       "heading": {
         "value": "130%",
         "type": "lineHeight"

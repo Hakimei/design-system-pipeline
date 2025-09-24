@@ -1,6 +1,6 @@
 /*
  * Do not edit — auto-generated
- * on Tue, 23 Sept 2025, 20:08:59 GMT+7
+ * on Wed, 24 Sept 2025, 16:30:27 GMT+7
  * 
  * Brand: brandA
  * Mode: light
@@ -13,18 +13,18 @@
   --color-neutral-100: #f9f9f9;
   --color-neutral-800: #222222;
   --color-neutral-900: #1d1d1d;
-  --color-brand-primary: #3a60a9; /* source: {color.2} */
-  --color-background-primary: var(--color-neutral-100); /* source: {color.neutral.100} */
-  --color-text-primary: var(--color-dark); /* source: {color.dark} */
-  --color-button-primary-background: var(--color-brand-primary); /* source: {color.brand.primary} */
+  --color-brand-primary: #3a60a9; /* ref: {color.2} */
+  --color-background-primary: var(--color-neutral-100); /* ref: {color.neutral.100} */
+  --color-text-primary: var(--color-dark); /* ref: {color.dark} */
+  --color-button-primary-background: var(--color-brand-primary); /* ref: {color.brand.primary} */
   --color-button-primary-text: #f9f9f9;
-  --typography-font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; /* source: {font.family.sans} */
-  --typography-font-sizes-heading: 1.125rem; /* source: {font.size.18} */
-  --typography-font-sizes-body: 1rem; /* source: {font.size.16} */
-  --typography-font-weights-heading: 700;
-  --typography-font-weights-body: 500;
-  --typography-line-heights-heading: 1.3;
-  --typography-line-heights-body: 1.5;
+  --typography-font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; /* ref: {font.family.sans} */
+  --typography-font-size-heading: 1.375rem; /* ref: {font.size.22} */
+  --typography-font-size-body: 1rem; /* ref: {font.size.16} */
+  --typography-font-weight-heading: 500; /* ref: {font.weight.medium} */
+  --typography-font-weight-body: 400; /* ref: {font.weight.regular} */
+  --typography-line-height-heading: 1.3;
+  --typography-line-height-body: 1.5;
   --border-radius-small: 0;
   --border-radius-medium: 0.125rem;
   --border-radius-large: 0.25rem;

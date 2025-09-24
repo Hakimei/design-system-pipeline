@@ -50,7 +50,7 @@ export const cssVariablesWithRefs = {
       // The `token.value` will be resolved.
       const originalValue = token.original.value;
       if (isReference(originalValue)) {
-        comment = ` /* source: ${originalValue} */`;
+        comment = ` /* ref: ${originalValue} */`;
         if (outputReferences) {
           // For Style Dictionary v4+, we need to find the reference in the dictionary.
           // The 'getReferences' method is no longer available.
@@ -92,7 +92,7 @@ export const swiftTokens = {
 
       const originalValue = token.original.value;
       if (isReference(originalValue)) {
-        comment = ` // source: ${originalValue}`;
+        comment = ` // ref: ${originalValue}`;
       }
 
       // Assumes transforms like 'color/swift', 'size/swift' have been run
@@ -146,7 +146,7 @@ export const androidResources = {
 
       const originalValue = token.original.value;
       if (isReference(originalValue)) {
-        comment = ` <!-- source: ${originalValue} -->`;
+        comment = ` <!-- ref: ${originalValue} -->`;
       }
 
       return `    <${resourceType} name="${token.name}">${token.value}</${resourceType}>${comment}`;
