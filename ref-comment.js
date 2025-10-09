@@ -42,28 +42,39 @@ export const cssVariablesWithRefs = {
 
     const header = file.options.fileHeader();
 
-    const tokens = dictionary.allTokens.map(token => {
-      let value = token.value;
-      let comment = '';
+    let lastCategory = '';
+    const tokens = dictionary.allTokens
+      .sort((a, b) => a.path.join('.').localeCompare(b.path.join('.')))
+      .map(token => {
+        let value = token.value;
+        let comment = '';
+        let line = '';
 
-      // In Style Dictionary v4+, we should check the original value for references.
-      // The `token.value` will be resolved.
-      const originalValue = token.original.value;
-      if (isReference(originalValue)) {
-        comment = ` /* ref: ${originalValue} */`;
-        if (outputReferences) {
-          // For Style Dictionary v4+, we need to find the reference in the dictionary.
-          // The 'getReferences' method is no longer available.
-          const referencePath = originalValue.replace(/[{}]/g, '');
-          const ref = dictionary.allTokens.find(t => t.path.join('.') === referencePath);
-          if (ref) { // If the reference is found
-            value = `var(--${ref.name})`;
+        const category = token.path[0];
+        if (category !== lastCategory) {
+          line += `\n  /* ${category.charAt(0).toUpperCase() + category.slice(1)} */\n`;
+          lastCategory = category;
+        }
+
+        // In Style Dictionary v4+, we should check the original value for references.
+        // The `token.value` will be resolved.
+        const originalValue = token.original.value;
+        if (isReference(originalValue)) {
+          comment = ` /* ref: ${originalValue} */`;
+          if (outputReferences) {
+            // For Style Dictionary v4+, we need to find the reference in the dictionary.
+            // The 'getReferences' method is no longer available.
+            const referencePath = originalValue.replace(/[{}]/g, '');
+            const ref = dictionary.allTokens.find(t => t.path.join('.') === referencePath);
+            if (ref) { // If the reference is found
+              value = `var(--${ref.name})`;
+            }
           }
         }
-      }
 
-      return `  --${token.name}: ${value};${comment}`;
-    }).join('\n');
+        line += `  --${token.name}: ${value};${comment}`;
+        return line;
+      }).join('\n');
 
     return `/*
  * ${header.join('\n * ')}
@@ -86,19 +97,27 @@ export const swiftTokens = {
   format: function({ dictionary, file, options }) {
     const header = file.options.fileHeader();
 
-    const tokens = dictionary.allTokens.map(token => {
-      let value = token.value;
-      let comment = '';
+    let lastCategory = '';
+    const tokens = dictionary.allTokens
+      .sort((a, b) => a.path.join('.').localeCompare(b.path.join('.')))
+      .map(token => {
+        let value = token.value;
+        let comment = '';
+        let line = '';
 
-      const originalValue = token.original.value;
-      if (isReference(originalValue)) {
-        comment = ` // ref: ${originalValue}`;
-      }
+        const category = token.path[0];
+        if (category !== lastCategory) {
+          line += `\n    // ${category.charAt(0).toUpperCase() + category.slice(1)}\n`;
+          lastCategory = category;
+        }
 
-      // Assumes transforms like 'color/swift', 'size/swift' have been run
-      // to format the value correctly (e.g., UIColor(...) or CGFloat(...)).
-      return `    public static let ${token.name} = ${value}${comment}`;
-    }).join('\n');
+        const originalValue = token.original.value;
+        if (isReference(originalValue)) {
+          comment = ` // ref: ${originalValue}`;
+        }
+        line += `    public static let ${token.name} = ${value}${comment}`;
+        return line;
+        }).join('\n');
 
     return `/*
  * ${header.join('\n * ')}
@@ -140,17 +159,27 @@ export const androidResources = {
       }
     };
 
-    const tokens = dictionary.allTokens.map(token => {
-      const resourceType = getResourceType(token);
-      let comment = '';
+    let lastCategory = '';
+    const tokens = dictionary.allTokens
+      .sort((a, b) => a.path.join('.').localeCompare(b.path.join('.')))
+      .map(token => {
+        const resourceType = getResourceType(token);
+        let comment = '';
+        let line = '';
 
-      const originalValue = token.original.value;
-      if (isReference(originalValue)) {
-        comment = ` <!-- ref: ${originalValue} -->`;
-      }
+        const category = token.path[0];
+        if (category !== lastCategory) {
+          line += `\n    <!-- ${category.charAt(0).toUpperCase() + category.slice(1)} -->\n`;
+          lastCategory = category;
+        }
 
-      return `    <${resourceType} name="${token.name}">${token.value}</${resourceType}>${comment}`;
-    }).join('\n');
+        const originalValue = token.original.value;
+        if (isReference(originalValue)) {
+          comment = ` <!-- ref: ${originalValue} -->`;
+        }
+        line += `    <${resourceType} name="${token.name}">${token.value}</${resourceType}>${comment}`;
+        return line;
+      }).join('\n');
 
     return `<?xml version="1.0" encoding="utf-8"?>\n<!--
   ~ ${header.join('\n  ~ ')}

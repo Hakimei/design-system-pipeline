@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Do not edit — auto-generated
-  ~ on Wed, 24 Sept 2025, 16:38:52 GMT+7
+  ~ on Thu, 09 Oct 2025, 18:54:01 GMT+7
   ~ 
   ~ Brand: brandA
   ~ Mode: light
@@ -10,25 +10,33 @@
   -->
 
 <resources>
-    <color name="color_white">#ffffffff</color>
+
+    <!-- BorderRadius -->
+    <dimen name="border_radius_large">4.00dp</dimen>
+    <dimen name="border_radius_medium">2.00dp</dimen>
+    <dimen name="border_radius_small">0.00dp</dimen>
+
+    <!-- Color -->
+    <color name="color_background_primary">#fff9f9f9</color> <!-- ref: {color.neutral.100} -->
+    <color name="color_brand_primary">#ff3a60a9</color> <!-- ref: {color.2} -->
+    <color name="color_button_primary_background">#ff3a60a9</color> <!-- ref: {color.brand.primary} -->
+    <color name="color_button_primary_text">#fff9f9f9</color>
     <color name="color_dark">#ff181818</color>
     <color name="color_neutral_100">#fff9f9f9</color>
     <color name="color_neutral_800">#ff222222</color>
     <color name="color_neutral_900">#ff1d1d1d</color>
-    <color name="color_brand_primary">#ff3a60a9</color> <!-- ref: {color.2} -->
-    <color name="color_background_primary">#fff9f9f9</color> <!-- ref: {color.neutral.100} -->
     <color name="color_text_primary">#ff181818</color> <!-- ref: {color.dark} -->
-    <color name="color_button_primary_background">#ff3a60a9</color> <!-- ref: {color.brand.primary} -->
-    <color name="color_button_primary_text">#fff9f9f9</color>
-    <string name="typography_font_family">'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'</string> <!-- ref: {font.family.sans} -->
-    <dimen name="typography_font_size_heading">22.00dp</dimen> <!-- ref: {font.size.22} -->
-    <dimen name="typography_font_size_body">16.00dp</dimen> <!-- ref: {font.size.16} -->
-    <string name="typography_font_weight_heading">500</string> <!-- ref: {font.weight.medium} -->
-    <string name="typography_font_weight_body">400</string> <!-- ref: {font.weight.regular} -->
-    <string name="typography_line_height_heading">1.3</string>
-    <string name="typography_line_height_body">1.5</string>
-    <dimen name="border_radius_small">0.00dp</dimen>
-    <dimen name="border_radius_medium">2.00dp</dimen>
-    <dimen name="border_radius_large">4.00dp</dimen>
+    <color name="color_white">#ffffffff</color>
+
+    <!-- Spacing -->
     <dimen name="spacing_button_padding">24.00dp</dimen>
+
+    <!-- Typography -->
+    <string name="typography_font_family">'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'</string> <!-- ref: {font.family.sans} -->
+    <dimen name="typography_font_size_body">16.00dp</dimen> <!-- ref: {font.size.16} -->
+    <dimen name="typography_font_size_heading">22.00dp</dimen> <!-- ref: {font.size.22} -->
+    <string name="typography_font_weight_body">400</string> <!-- ref: {font.weight.regular} -->
+    <string name="typography_font_weight_heading">500</string> <!-- ref: {font.weight.medium} -->
+    <string name="typography_line_height_body">1.5</string>
+    <string name="typography_line_height_heading">1.3</string>
 </resources>

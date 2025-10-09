@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Do not edit — auto-generated
-  ~ on Wed, 24 Sept 2025, 16:38:52 GMT+7
+  ~ on Thu, 09 Oct 2025, 18:54:01 GMT+7
   ~ 
   ~ Contains: primitive tokens
   -->
 
 <resources>
+
+    <!-- Color -->
     <color name="color_1">#ffd9dee6</color>
     <color name="color_2">#ff3a60a9</color>
     <color name="color_3">#ff000000</color>
+
+    <!-- Font -->
     <string name="font_family_sans">'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'</string>
     <dimen name="font_size_14">14.00dp</dimen>
     <dimen name="font_size_16">16.00dp</dimen>
     <dimen name="font_size_18">18.00dp</dimen>
     <dimen name="font_size_22">22.00dp</dimen>
-    <string name="font_weight_regular">400</string>
     <string name="font_weight_medium">500</string>
+    <string name="font_weight_regular">400</string>
 </resources>

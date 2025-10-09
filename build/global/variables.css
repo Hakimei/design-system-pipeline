@@ -1,18 +1,22 @@
 /*
  * Do not edit — auto-generated
- * on Wed, 24 Sept 2025, 16:38:52 GMT+7
+ * on Thu, 09 Oct 2025, 18:54:01 GMT+7
  * 
  * Contains: primitive tokens
  */
 :root {
+
+  /* Color */
   --color-1: #d9dee6;
   --color-2: #3a60a9;
   --color-3: #000000;
+
+  /* Font */
   --font-family-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   --font-size-14: 0.875rem;
   --font-size-16: 1rem;
   --font-size-18: 1.125rem;
   --font-size-22: 1.375rem;
-  --font-weight-regular: 400;
   --font-weight-medium: 500;
+  --font-weight-regular: 400;
 }
