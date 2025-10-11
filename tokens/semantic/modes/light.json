@@ -11,6 +11,14 @@
         "value": "{color.dark}",
         "type": "color"
       }
+    },
+    "button": {
+      "primary": {
+        "background": {
+          "value": "{color.brand.primary}",
+          "type": "color"
+        }
+      }
     }
   }
 }

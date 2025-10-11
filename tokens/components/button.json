@@ -1,15 +1,15 @@
 {
   "color": {
     "button": {
-      "primary": {
-        "background": {
-          "value": "{color.brand.primary}",
-          "type": "color"
-        },
-        "text": {
-          "value": "#f9f9f9",
+      "background": {
+        "primary": {
+          "value": "{color.button.primary.background}",
           "type": "color"
         }
+      },
+      "text": {
+        "value": "{color.white}",
+        "type": "color"
       }
     }
   }

@@ -16,7 +16,7 @@ body {
     making it more modular and maintainable.
   */
   --btn-color-submit: var(--color-button-primary-background);
-  --btn-color-text: var(--color-button-primary-text);
+  --btn-color-text: var(--color-button-text);
   --btn-font-size-body: var(--typography-font-size-body);
   --btn-font-size-weight: var(--typography-font-weight-body);
   --btn-spacing-padding: var(--spacing-button-padding) var(--spacing-button-padding);

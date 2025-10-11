@@ -1,6 +1,6 @@
 /*
  * Do not edit — auto-generated
- * on Thu, 09 Oct 2025, 18:54:01 GMT+7
+ * on Sat, 11 Oct 2025, 13:02:37 GMT+7
  * 
  * Brand: brandB
  * Mode: dark
@@ -15,26 +15,14 @@
   --border-radius-small: 0.25rem;
 
   /* Color */
-  --color-background-primary: var(--color-dark); /* ref: {color.dark} */
+  --color-background-primary: #181818; /* ref: {color.dark} */
   --color-brand-primary: #e54666;
-  --color-button-primary-background: var(--color-brand-primary); /* ref: {color.brand.primary} */
-  --color-button-primary-text: #f9f9f9;
-  --color-dark: #181818;
-  --color-neutral-100: #f9f9f9;
-  --color-neutral-800: #222222;
-  --color-neutral-900: #1d1d1d;
-  --color-text-primary: var(--color-white); /* ref: {color.white} */
-  --color-white: #ffffff;
+  --color-brand-primary-dark: #4666e5;
+  --color-button-background-primary: var(--color-button-primary-background); /* ref: {color.button.primary.background} */
+  --color-button-primary-background: var(--color-brand-primary-dark); /* ref: {color.brand.primary-dark} */
+  --color-button-text: #ffffff; /* ref: {color.white} */
+  --color-text-primary: #ffffff; /* ref: {color.white} */
 
   /* Spacing */
   --spacing-button-padding: 0.75rem;
-
-  /* Typography */
-  --typography-font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; /* ref: {font.family.sans} */
-  --typography-font-size-body: 1rem; /* ref: {font.size.16} */
-  --typography-font-size-heading: 1.375rem; /* ref: {font.size.22} */
-  --typography-font-weight-body: 400; /* ref: {font.weight.regular} */
-  --typography-font-weight-heading: 500; /* ref: {font.weight.medium} */
-  --typography-line-height-body: 1.5;
-  --typography-line-height-heading: 1.3;
 }

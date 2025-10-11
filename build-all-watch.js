@@ -189,14 +189,14 @@ async function loadTokens() {
     return { primitiveTokens, aliasTokens, primitiveFilesPaths, brands, modes, shapes, densities, componentTokens };
 }
 
-function addMetadata(targetObj, sourceObj, isPrimitive) {
+function addMetadata(targetObj, sourceObj, metadataKey, metadataValue) {
     for (const key in sourceObj) {
         if (Object.prototype.hasOwnProperty.call(sourceObj, key) && Object.prototype.hasOwnProperty.call(targetObj, key)) {
             if (Object.prototype.hasOwnProperty.call(sourceObj[key], 'value')) { // This is a token
                 targetObj[key].attributes = targetObj[key].attributes || {};
-                targetObj[key].attributes.isPrimitive = isPrimitive;
+                targetObj[key].attributes[metadataKey] = metadataValue;
             } else if (typeof sourceObj[key] === 'object' && sourceObj[key] !== null) { // This is a category
-                addMetadata(targetObj[key], sourceObj[key], isPrimitive);
+                addMetadata(targetObj[key], sourceObj[key], metadataKey, metadataValue);
             }
         }
     }
@@ -227,9 +227,13 @@ async function buildThemes(tokenData) {
                     await fs.mkdir(fileDir, { recursive: true });
 
                     const finalTokens = JSON.parse(JSON.stringify(merged)); // Deep copy
-                    addMetadata(finalTokens, primitiveTokens, true);
-                    [aliasTokens, brandTokens, modeTokens, shapeTokens, densityTokens, componentTokens].forEach(tokenSet => {
-                        addMetadata(finalTokens, tokenSet, false);
+                    addMetadata(finalTokens, primitiveTokens, 'isPrimitive', true);
+                    addMetadata(finalTokens, aliasTokens, 'isAlias', true);
+
+                    // Mark other tokens as not primitive and not alias
+                    [brandTokens, modeTokens, shapeTokens, densityTokens, componentTokens].forEach(tokenSet => {
+                        addMetadata(finalTokens, tokenSet, 'isPrimitive', false);
+                        addMetadata(finalTokens, tokenSet, 'isAlias', false);
                     });
 
                     await fs.writeFile(filePath, JSON.stringify(finalTokens, null, 2));
@@ -246,12 +250,12 @@ async function buildThemes(tokenData) {
     return themesIndex;
 }
 
-function buildGlobal(primitiveFiles) {
+function buildGlobal(tokens) {
     console.log('\nBuilding global primitive tokens...');
     const buildDir = './build';
     const globalBuildPath = `${buildDir}/global/`;
-    const SDglobal = new StyleDictionary({
-        source: primitiveFiles,
+    const SDGlobal = new StyleDictionary({
+        tokens: tokens,
         platforms: {
             css: {
                 transformGroup: 'custom/css',
@@ -261,8 +265,9 @@ function buildGlobal(primitiveFiles) {
                     format: 'custom/css/variables-with-refs',
                     options: {
                         fileHeader: () => fileHeader(['Contains: primitive tokens']),
-                        outputReferences: true,
+                        outputReferences: false,
                     },
+                    filter: (token) => token.attributes.isPrimitive,
                 }]
             },
             android: {
@@ -273,8 +278,9 @@ function buildGlobal(primitiveFiles) {
                     format: 'custom/android/resources',
                     options: {
                         fileHeader: () => fileHeader(['Contains: primitive tokens']),
-                        outputReferences: true,
+                        outputReferences: false,
                     },
+                    filter: (token) => token.attributes.isPrimitive,
                 }]
             },
             ios: {
@@ -285,14 +291,67 @@ function buildGlobal(primitiveFiles) {
                     format: 'custom/swift/tokens',
                     options: {
                         fileHeader: () => fileHeader(['Contains: primitive tokens']),
-                        outputReferences: true,
+                        outputReferences: false,
                     },
+                    filter: (token) => token.attributes.isPrimitive,
                 }]
             }
         }
     });
-    SDglobal.buildAllPlatforms();
+    SDGlobal.buildAllPlatforms();
     console.log(`✅ Built global primitives for Web/Android/iOS`);
+}
+
+function buildBase(tokens) {
+    console.log('\nBuilding base alias tokens...');
+    const buildDir = './build';
+    const baseBuildPath = `${buildDir}/base/`;
+    const SDBase = new StyleDictionary({
+        tokens: tokens,
+        platforms: {
+            css: {
+                transformGroup: 'custom/css',
+                buildPath: baseBuildPath,
+                files: [{
+                    destination: 'variables.css',
+                    format: 'custom/css/variables-with-refs',
+                    options: {
+                        fileHeader: () => fileHeader(['Contains: alias (base) tokens that reference primitives']),
+                        outputReferences: false,
+                    },
+                    filter: (token) => token.attributes.isAlias,
+                }]
+            },
+            android: {
+                transformGroup: 'custom/android',
+                buildPath: baseBuildPath,
+                files: [{
+                    destination: 'variables.xml',
+                    format: 'custom/android/resources',
+                    options: {
+                        fileHeader: () => fileHeader(['Contains: alias (base) tokens']),
+                        outputReferences: false,
+                    },
+                    filter: (token) => token.attributes.isAlias,
+                }]
+            },
+            ios: {
+                transformGroup: 'custom/ios-swift',
+                buildPath: baseBuildPath,
+                files: [{
+                    destination: 'variables.swift',
+                    format: 'custom/swift/tokens',
+                    options: {
+                        fileHeader: () => fileHeader(['Contains: alias (base) tokens']),
+                        outputReferences: false,
+                    },
+                    filter: (token) => token.attributes.isAlias,
+                }]
+            }
+        }
+    });
+    SDBase.buildAllPlatforms();
+    console.log(`✅ Built base aliases for Web/Android/iOS`);
 }
 
 function buildThemePlatforms(themesIndex) {
@@ -322,7 +381,7 @@ function buildThemePlatforms(themesIndex) {
                             ]),
                             outputReferences: true, // References are resolved in theme files
                         },
-                        filter: (token) => !token.attributes.isPrimitive && token.type !== 'typography',
+                        filter: (token) => !token.attributes.isPrimitive && !token.attributes.isAlias && token.type !== 'typography',
                     }, {
                         destination: 'web/styles.css',
                         format: 'custom/css/typography-classes',
@@ -334,7 +393,7 @@ function buildThemePlatforms(themesIndex) {
                                 `Density: ${density}`,
                             ]),
                         },
-                        filter: (token) => !token.attributes.isPrimitive && token.type === 'typography',
+                        filter: (token) => !token.attributes.isPrimitive && !token.attributes.isAlias && token.type === 'typography',
                     }]
                 },
                 android: {
@@ -352,8 +411,8 @@ function buildThemePlatforms(themesIndex) {
                             ]),
                             outputReferences: false,
                         },
-                        // Exclude primitive tokens to avoid duplication with the global file
-                        filter: (token) => !token.attributes.isPrimitive && token.type !== 'typography',
+                        // Exclude primitive and alias tokens to avoid duplication
+                        filter: (token) => !token.attributes.isPrimitive && !token.attributes.isAlias && token.type !== 'typography',
                     }, {
                         destination: 'android/styles.xml',
                         format: 'custom/android/styles',
@@ -366,7 +425,7 @@ function buildThemePlatforms(themesIndex) {
                             ]),
                         },
                         // Only include composite typography tokens
-                        filter: (token) => !token.attributes.isPrimitive && token.type === 'typography',
+                        filter: (token) => !token.attributes.isPrimitive && !token.attributes.isAlias && token.type === 'typography',
                     }]
                 },
                 ios: {
@@ -385,8 +444,8 @@ function buildThemePlatforms(themesIndex) {
                             ]),
                             outputReferences: false,
                         },
-                        // Exclude primitive tokens to avoid duplication with the global file
-                        filter: (token) => !token.attributes.isPrimitive && token.type !== 'typography',
+                        // Exclude primitive and alias tokens to avoid duplication
+                        filter: (token) => !token.attributes.isPrimitive && !token.attributes.isAlias && token.type !== 'typography',
                     }, {
                         destination: 'ios/styles.swift',
                         format: 'custom/swift/textstyles',
@@ -399,7 +458,7 @@ function buildThemePlatforms(themesIndex) {
                             ]),
                         },
                         // Only include composite typography tokens
-                        filter: (token) => !token.attributes.isPrimitive && token.type === 'typography',
+                        filter: (token) => !token.attributes.isPrimitive && !token.attributes.isAlias && token.type === 'typography',
                     }]
                 }
             }
@@ -416,9 +475,20 @@ async function buildAll() {
     
     await fs.mkdir(buildDir, { recursive: true }).catch(() => {});
     const tokenData = await loadTokens();
-    const themesIndex = await buildThemes(tokenData);
 
-    buildGlobal(tokenData.primitiveFilesPaths);
+    // Create a single, fully-merged token object with all metadata first.
+    const allTokens = mergeDeep(tokenData.primitiveTokens, tokenData.aliasTokens);
+    addMetadata(allTokens, tokenData.primitiveTokens, 'isPrimitive', true);
+    addMetadata(allTokens, tokenData.aliasTokens, 'isAlias', true);
+    // Ensure all tokens have the attributes defined, even if false.
+    addMetadata(allTokens, tokenData.primitiveTokens, 'isAlias', false);
+    addMetadata(allTokens, tokenData.aliasTokens, 'isPrimitive', false);
+
+    const themesIndex = await buildThemes(tokenData);
+    
+    // Now, build the global and base files from the pre-processed token object.
+    buildGlobal(allTokens);
+    buildBase(allTokens);
     buildThemePlatforms(themesIndex);
 
     console.log(`🎉 Build complete!`);

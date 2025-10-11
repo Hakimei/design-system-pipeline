@@ -4,6 +4,10 @@
       "primary": {
         "value": "{color.2}",
         "type": "color"
+      },
+      "primary-dark": {
+        "value": "{color.3}",
+        "type": "color"
       }
     }
   }

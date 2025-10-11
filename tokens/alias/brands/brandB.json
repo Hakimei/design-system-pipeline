@@ -4,6 +4,10 @@
       "primary": {
         "value": "#E54666",
         "type": "color"
+      },
+      "primary-dark": {
+        "value": "#4666e5",
+        "type": "color"
       }
     }
   }

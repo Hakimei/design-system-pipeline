@@ -1,0 +1,24 @@
+/*
+ * Do not edit — auto-generated
+ * on Sat, 11 Oct 2025, 13:02:37 GMT+7
+ * 
+ * Contains: alias (base) tokens that reference primitives
+ */
+:root {
+
+  /* Color */
+  --color-dark: #181818;
+  --color-neutral-100: #f9f9f9;
+  --color-neutral-800: #222222;
+  --color-neutral-900: #1d1d1d;
+  --color-white: #ffffff;
+
+  /* Typography */
+  --typography-font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; /* ref: {font.family.sans} */
+  --typography-font-size-body: 1rem; /* ref: {font.size.16} */
+  --typography-font-size-heading: 1.375rem; /* ref: {font.size.22} */
+  --typography-font-weight-body: 400; /* ref: {font.weight.regular} */
+  --typography-font-weight-heading: 500; /* ref: {font.weight.medium} */
+  --typography-line-height-body: 1.5;
+  --typography-line-height-heading: 1.3;
+}
