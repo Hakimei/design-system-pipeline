@@ -614,15 +614,13 @@ function buildThemePlatforms(themesIndex) {
                         format: 'custom/swift/tokens',
                         className: 'Tokens',
                         options: {
+                            outputReferences: false,
                             fileHeader: () => fileHeader([
                                 `Brand: ${brand}`,
                                 `Mode: ${mode}`,
                                 `Shape: ${shape}`,
                                 `Density: ${density}`,
                             ]),
-                            outputReferences: false,
-                            // Prepend the ShadowLayer struct definition
-                            fileHeader: (defaultMessage = []) => defaultMessage.concat(['struct ShadowLayer {', '  let offset: CGSize', '  let radius: CGFloat', '  let color: UIColor', '  let inset: Bool', '}']),
                         },
                         // Only include shadow tokens
                         filter: (token) => !token.attributes.isPrimitive && !token.attributes.isAlias && token.type === 'shadow',
