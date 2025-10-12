@@ -2,10 +2,23 @@ import fs from 'fs/promises';
 import path from 'path';
 import chokidar from 'chokidar';
 import StyleDictionary from 'style-dictionary';
+import tinycolor from 'tinycolor2';
 import {
   registerCustomFormats
 } from './ref-comment.js';
 import { fileHeader } from './header-comment.js';
+
+StyleDictionary.registerTransform({
+    name: 'color/hexToRgba',
+    type: 'value',
+    filter: (token) => token.type === 'color',
+    transform: (token) => {
+        const color = tinycolor(token.value);
+        // toRgbString() automatically handles alpha and returns
+        // 'rgba(...)' if alpha is < 1, or 'rgb(...)' if alpha is 1.
+        return color.toRgbString();
+    }
+});
 
 StyleDictionary.registerTransform({
     name: 'ts/size/lineheight',
@@ -57,16 +70,30 @@ StyleDictionary.registerTransform({
     }
 });
 
+StyleDictionary.registerTransform({
+    name: 'shadow/css/shorthandWithRgba',
+    type: 'value',
+    filter: (token) => token.type === 'shadow',
+    transform: (token) => {
+        const layers = Array.isArray(token.value) ? token.value : [token.value];
+        return layers.map(layer => {
+            const { offsetX, offsetY, blur, spread, color, inset } = layer;
+            const colorValue = tinycolor(color).toRgbString();
+            return `${inset ? 'inset ' : ''}${offsetX} ${offsetY} ${blur} ${spread || ''} ${colorValue}`.trim().replace(/ +/g, ' ');
+        }).join(', ');
+    }
+});
+
 // Register the custom transform group
 StyleDictionary.registerTransformGroup({
     name: 'custom/css',
     transforms: [
         'attribute/cti',
         'name/kebab',
-        'color/css',
+        'color/hexToRgba',
         'size/pxToRem',
-        'ts/size/lineheight',
-        'shadow/css/shorthand'
+        'ts/size/lineheight', // Corrected typo from previous step
+        'shadow/css/shorthandWithRgba'
     ]
 });
 

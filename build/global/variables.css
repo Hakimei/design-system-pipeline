@@ -1,15 +1,15 @@
 /*
  * Do not edit — auto-generated
- * on Sun, 12 Oct 2025, 15:44:59 GMT+7
+ * on Sun, 12 Oct 2025, 16:06:57 GMT+7
  * 
  * Contains: primitive tokens
  */
 :root {
 
   /* Color */
-  --color-1: #d9dee6;
-  --color-2: #6e56cf;
-  --color-3: #6550b9;
+  --color-1: rgb(217, 222, 230);
+  --color-2: rgb(110, 86, 207);
+  --color-3: rgb(101, 80, 185);
 
   /* Font */
   --font-family-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';

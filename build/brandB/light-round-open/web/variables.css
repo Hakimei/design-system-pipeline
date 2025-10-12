@@ -1,6 +1,6 @@
 /*
  * Do not edit — auto-generated
- * on Sun, 12 Oct 2025, 15:44:59 GMT+7
+ * on Sun, 12 Oct 2025, 16:06:57 GMT+7
  * 
  * Brand: brandB
  * Mode: light
@@ -15,13 +15,13 @@
   --border-radius-small: 0.25rem;
 
   /* Color */
-  --color-background-primary: #f9f9f9; /* ref: {color.neutral.100} */
-  --color-brand-primary: #e54666;
-  --color-brand-primary-dark: #4666e5;
+  --color-background-primary: rgb(249, 249, 249); /* ref: {color.neutral.100} */
+  --color-brand-primary: rgb(229, 70, 102);
+  --color-brand-primary-dark: rgb(70, 102, 229);
   --color-button-background-primary: var(--color-button-primary-background); /* ref: {color.button.primary.background} */
   --color-button-primary-background: var(--color-brand-primary); /* ref: {color.brand.primary} */
-  --color-button-text: #ffffff; /* ref: {color.white} */
-  --color-text-primary: #181818; /* ref: {color.dark} */
+  --color-button-text: rgb(255, 255, 255); /* ref: {color.white} */
+  --color-text-primary: rgb(24, 24, 24); /* ref: {color.dark} */
 
   /* Spacing */
   --spacing-button-padding: 2.875rem;

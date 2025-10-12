@@ -1,17 +1,17 @@
 /*
  * Do not edit — auto-generated
- * on Sun, 12 Oct 2025, 15:44:59 GMT+7
+ * on Sun, 12 Oct 2025, 16:06:57 GMT+7
  * 
  * Contains: alias (base) tokens that reference primitives
  */
 :root {
 
   /* Color */
-  --color-dark: #181818;
-  --color-neutral-100: #f9f9f9;
-  --color-neutral-800: #222222;
-  --color-neutral-900: #1d1d1d;
-  --color-white: #ffffff;
+  --color-dark: rgb(24, 24, 24);
+  --color-neutral-100: rgb(249, 249, 249);
+  --color-neutral-800: rgb(34, 34, 34);
+  --color-neutral-900: rgb(29, 29, 29);
+  --color-white: rgb(255, 255, 255);
 
   /* Typography */
   --typography-font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; /* ref: {font.family.sans} */
