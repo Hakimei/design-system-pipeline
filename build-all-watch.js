@@ -39,20 +39,50 @@ StyleDictionary.registerTransform({
     }
 });
 
+StyleDictionary.registerTransform({
+    name: 'swift/shadow',
+    type: 'value',
+    filter: (token) => token.type === 'shadow',
+    transform: (token) => {
+        const layers = Array.isArray(token.value) ? token.value : [token.value];
+        return `[\n${layers
+            .map(l => {
+                const blur = parseFloat(l.blur);
+                const radius = blur / 2;
+                const color = l.color.slice(0, 7);
+                const alpha = parseInt(l.color.slice(7, 9), 16) / 255 || 1;
+                return `    ShadowLayer(offset: CGSize(width: ${parseFloat(l.offsetX)}, height: ${parseFloat(l.offsetY)}), radius: ${radius}, color: UIColor(hex: "${color}").withAlphaComponent(${alpha}), inset: ${l.inset || false})`;
+            })
+            .join(',\n')}\n  ]`;
+    }
+});
+
 // Register the custom transform group
 StyleDictionary.registerTransformGroup({
     name: 'custom/css',
-    transforms: ['attribute/cti', 'name/kebab', 'color/css', 'size/pxToRem', 'ts/size/lineheight']
+    transforms: [
+        'attribute/cti',
+        'name/kebab',
+        'color/css',
+        'size/pxToRem',
+        'ts/size/lineheight',
+        'shadow/css/shorthand'
+    ]
 });
 
 StyleDictionary.registerTransformGroup({
     name: 'custom/android',
-    transforms: ['size/pxToRem'].concat(StyleDictionary.hooks.transformGroups['android'], ['ts/size/lineheight'])
+    transforms: ['size/pxToRem'].concat(
+        StyleDictionary.hooks.transformGroups['android'],
+        [
+            'ts/size/lineheight'
+        ]
+    )
 });
 
 StyleDictionary.registerTransformGroup({
     name: 'custom/ios-swift',
-    transforms: ['size/pxToRem'].concat(StyleDictionary.hooks.transformGroups['ios-swift'], ['ts/size/lineheight', 'swift/fontWeight'])
+    transforms: ['size/pxToRem'].concat(StyleDictionary.hooks.transformGroups['ios-swift'], ['ts/size/lineheight', 'swift/fontWeight', 'swift/shadow'])
 });
 
 registerCustomFormats(StyleDictionary);
@@ -101,6 +131,32 @@ StyleDictionary.registerFormat({
 
     return `<?xml version="1.0" encoding="utf-8"?>\n<!--\n  ~ ${header.join('\n  ~ ')}\n  -->\n<resources>\n${styles}\n</resources>`;
   }
+});
+
+// Register a custom format for Android to create <style> resources for shadows
+StyleDictionary.registerFormat({
+    name: 'custom/android/shadows',
+    format: function({ dictionary, file }) {
+        const header = file.options.fileHeader();
+        const styles = dictionary.allTokens
+            .filter(token => token.type === 'shadow')
+            .map(token => {
+                const layers = Array.isArray(token.value) ? token.value : [token.value];
+                const properties = layers.map((l, i) => {
+                    const layerNum = i + 1;
+                    return `    <item name="offset_x_layer${layerNum}">${parseFloat(l.offsetX)}dp</item>
+    <item name="offset_y_layer${layerNum}">${parseFloat(l.offsetY)}dp</item>
+    <item name="blur_layer${layerNum}">${parseFloat(l.blur)}dp</item>
+    <item name="color_layer${layerNum}">${l.color}</item>
+    <item name="inset_layer${layerNum}">${l.inset || false}</item>`;
+                }).join('\n');
+
+                return `  <style name="${token.name.replace(/-/g, '_')}">\n${properties}\n  </style>`;
+            })
+            .join('\n');
+
+        return `<?xml version="1.0" encoding="utf-8"?>\n<!--\n  ~ ${header.join('\n  ~ ')}\n  -->\n<resources>\n${styles}\n</resources>`;
+    }
 });
 
 // Register a custom format for Swift to create Text Style ViewModifiers
@@ -381,9 +437,9 @@ function buildThemePlatforms(themesIndex) {
                             ]),
                             outputReferences: true, // References are resolved in theme files
                         },
-                        filter: (token) => !token.attributes.isPrimitive && !token.attributes.isAlias && token.type !== 'typography',
+                        filter: (token) => !token.attributes.isPrimitive && !token.attributes.isAlias && !['typography', 'shadow'].includes(token.type),
                     }, {
-                        destination: 'web/styles.css',
+                        destination: 'web/text-styles.css',
                         format: 'custom/css/typography-classes',
                         options: {
                             fileHeader: () => fileHeader([
@@ -394,7 +450,21 @@ function buildThemePlatforms(themesIndex) {
                             ]),
                         },
                         filter: (token) => !token.attributes.isPrimitive && !token.attributes.isAlias && token.type === 'typography',
-                    }]
+                    }, {
+                        destination: 'web/effect-styles.css',
+                        format: 'css/variables',
+                        options: {
+                            fileHeader: () => fileHeader([
+                                `Brand: ${brand}`,
+                                `Mode: ${mode}`,
+                                `Shape: ${shape}`,
+                                `Density: ${density}`,
+                            ]),
+                            outputReferences: true,
+                        },
+                        filter: (token) => !token.attributes.isPrimitive && !token.attributes.isAlias && token.type === 'shadow',
+                    }
+                    ]
                 },
                 android: {
                     transformGroup: 'custom/android',
@@ -412,9 +482,9 @@ function buildThemePlatforms(themesIndex) {
                             outputReferences: false,
                         },
                         // Exclude primitive and alias tokens to avoid duplication
-                        filter: (token) => !token.attributes.isPrimitive && !token.attributes.isAlias && token.type !== 'typography',
+                        filter: (token) => !token.attributes.isPrimitive && !token.attributes.isAlias && !['typography', 'shadow'].includes(token.type),
                     }, {
-                        destination: 'android/styles.xml',
+                        destination: 'android/text-styles.xml',
                         format: 'custom/android/styles',
                         options: {
                             fileHeader: () => fileHeader([
@@ -426,6 +496,19 @@ function buildThemePlatforms(themesIndex) {
                         },
                         // Only include composite typography tokens
                         filter: (token) => !token.attributes.isPrimitive && !token.attributes.isAlias && token.type === 'typography',
+                    }, {
+                        destination: 'android/effect-styles.xml',
+                        format: 'custom/android/shadows',
+                        options: {
+                            fileHeader: () => fileHeader([
+                                `Brand: ${brand}`,
+                                `Mode: ${mode}`,
+                                `Shape: ${shape}`,
+                                `Density: ${density}`,
+                            ]),
+                        },
+                        // Only include shadow tokens
+                        filter: (token) => !token.attributes.isPrimitive && !token.attributes.isAlias && token.type === 'shadow',
                     }]
                 },
                 ios: {
@@ -445,9 +528,9 @@ function buildThemePlatforms(themesIndex) {
                             outputReferences: false,
                         },
                         // Exclude primitive and alias tokens to avoid duplication
-                        filter: (token) => !token.attributes.isPrimitive && !token.attributes.isAlias && token.type !== 'typography',
+                        filter: (token) => !token.attributes.isPrimitive && !token.attributes.isAlias && !['typography', 'shadow'].includes(token.type),
                     }, {
-                        destination: 'ios/styles.swift',
+                        destination: 'ios/text-styles.swift',
                         format: 'custom/swift/textstyles',
                         options: {
                             fileHeader: () => fileHeader([
@@ -459,6 +542,23 @@ function buildThemePlatforms(themesIndex) {
                         },
                         // Only include composite typography tokens
                         filter: (token) => !token.attributes.isPrimitive && !token.attributes.isAlias && token.type === 'typography',
+                    }, {
+                        destination: 'ios/effect-styles.swift',
+                        format: 'custom/swift/tokens',
+                        className: 'Tokens',
+                        options: {
+                            fileHeader: () => fileHeader([
+                                `Brand: ${brand}`,
+                                `Mode: ${mode}`,
+                                `Shape: ${shape}`,
+                                `Density: ${density}`,
+                            ]),
+                            outputReferences: false,
+                            // Prepend the ShadowLayer struct definition
+                            fileHeader: (defaultMessage = []) => defaultMessage.concat(['struct ShadowLayer {', '  let offset: CGSize', '  let radius: CGFloat', '  let color: UIColor', '  let inset: Bool', '}']),
+                        },
+                        // Only include shadow tokens
+                        filter: (token) => !token.attributes.isPrimitive && !token.attributes.isAlias && token.type === 'shadow',
                     }]
                 }
             }

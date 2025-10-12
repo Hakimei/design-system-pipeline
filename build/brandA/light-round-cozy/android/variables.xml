@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Do not edit — auto-generated
-  ~ on Sat, 11 Oct 2025, 13:02:37 GMT+7
+  ~ on Sun, 12 Oct 2025, 15:44:59 GMT+7
   ~ 
   ~ Brand: brandA
   ~ Mode: light
@@ -18,10 +18,10 @@
 
     <!-- Color -->
     <color name="color_background_primary">#fff9f9f9</color> <!-- ref: {color.neutral.100} -->
-    <color name="color_brand_primary">#ff3a60a9</color> <!-- ref: {color.2} -->
-    <color name="color_brand_primary_dark">#ff5279c4</color> <!-- ref: {color.3} -->
-    <color name="color_button_background_primary">#ff3a60a9</color> <!-- ref: {color.button.primary.background} -->
-    <color name="color_button_primary_background">#ff3a60a9</color> <!-- ref: {color.brand.primary} -->
+    <color name="color_brand_primary">#ff6e56cf</color> <!-- ref: {color.2} -->
+    <color name="color_brand_primary_dark">#ff6550b9</color> <!-- ref: {color.3} -->
+    <color name="color_button_background_primary">#ff6e56cf</color> <!-- ref: {color.button.primary.background} -->
+    <color name="color_button_primary_background">#ff6e56cf</color> <!-- ref: {color.brand.primary} -->
     <color name="color_button_text">#ffffffff</color> <!-- ref: {color.white} -->
     <color name="color_text_primary">#ff181818</color> <!-- ref: {color.dark} -->
 

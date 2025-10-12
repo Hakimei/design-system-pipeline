@@ -15,12 +15,13 @@ body {
     This decouples the component's internal styling from the global token names,
     making it more modular and maintainable.
   */
-  --btn-color-submit: var(--color-button-primary-background);
+  --btn-color-submit: var(--color-button-background-primary);
   --btn-color-text: var(--color-button-text);
   --btn-font-size-body: var(--typography-font-size-body);
   --btn-font-size-weight: var(--typography-font-weight-body);
   --btn-spacing-padding: var(--spacing-button-padding) var(--spacing-button-padding);
   --btn-radius-shape: var(--border-radius-medium);
+  --btn-shadow: var(--shadow-button);
 
   /* Apply styles using the component's own variables */
   background: var(--btn-color-submit);
@@ -29,6 +30,7 @@ body {
   font-weight: var(--btn-font-size-weight);
   padding: var(--btn-spacing-padding);
   border-radius: var(--btn-radius-shape);
+  box-shadow: var(--btn-shadow);
   border: none;
   cursor: pointer;
 }

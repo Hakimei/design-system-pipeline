@@ -1,0 +1,17 @@
+/**
+ * Do not edit — auto-generated
+ * on Sun, 12 Oct 2025, 15:44:59 GMT+7
+ * 
+ * Brand: brandB
+ * Mode: light
+ * Shape: base
+ * Density: compact
+ */
+
+:root {
+  --shadow-button: 0px 2px 5px 0px #00000026, 0px 1px 1px 0px #ffffff1a;
+  --shadow-container-sm: 0px 0px 0px 0px #00000000, 0px 6px 6px -6px #00000014, 0px 0px 1px 0px #0000004d, 0px 0px 1px 0px #ffffff0d;
+  --shadow-container-md: 0px 0px 0px 0px #00000000, 0px 10px 12px -6px #0000001a, 0px 0px 1px 0px #0000004d, 0px 0px 1px 0px #ffffff0d;
+  --shadow-container-lg: 0px 0px 0px 0px #00000000, 0px 12px 24px -6px #0000001f, 0px 0px 1px 0px #0000004d, 0px 0px 1px 0px #ffffff0d;
+  --shadow-container-xlg: 0px 32px 32px -8px #00000014, 0px 6px 32px -8px #00000029, 0px 0px 1px 0px #0000004d, 0px 0px 1px 0px #ffffff0d;
+}

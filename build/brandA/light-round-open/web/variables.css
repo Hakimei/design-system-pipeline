@@ -1,6 +1,6 @@
 /*
  * Do not edit — auto-generated
- * on Sat, 11 Oct 2025, 13:02:37 GMT+7
+ * on Sun, 12 Oct 2025, 15:44:59 GMT+7
  * 
  * Brand: brandA
  * Mode: light
@@ -16,8 +16,8 @@
 
   /* Color */
   --color-background-primary: #f9f9f9; /* ref: {color.neutral.100} */
-  --color-brand-primary: #3a60a9; /* ref: {color.2} */
-  --color-brand-primary-dark: #5279c4; /* ref: {color.3} */
+  --color-brand-primary: #6e56cf; /* ref: {color.2} */
+  --color-brand-primary-dark: #6550b9; /* ref: {color.3} */
   --color-button-background-primary: var(--color-button-primary-background); /* ref: {color.button.primary.background} */
   --color-button-primary-background: var(--color-brand-primary); /* ref: {color.brand.primary} */
   --color-button-text: #ffffff; /* ref: {color.white} */

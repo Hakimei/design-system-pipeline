@@ -22,7 +22,180 @@
             },
             "description": "Text style: body"
         }
+    },
+    "shadow": {
+      "button": {
+        "type": "shadow",
+        "value": [
+          {
+            "inset": false,
+            "color": "#00000026",
+            "offsetX": "0px",
+            "offsetY": "2px",
+            "blur": "5px",
+            "spread": "0px"
+          },
+          {
+            "inset": true,
+            "color": "#ffffff1a",
+            "offsetX": "0px",
+            "offsetY": "1px",
+            "blur": "1px",
+            "spread": "0px"
+          }
+        ]
+      },
+      "container": {
+      "sm": {
+        "type": "shadow",
+        "value": [
+          {
+            "inset": false,
+            "color": "#00000000",
+            "offsetX": "0px",
+            "offsetY": "0px",
+            "blur": "0px",
+            "spread": "0px"
+          },
+          {
+            "inset": false,
+            "color": "#00000014",
+            "offsetX": "0px",
+            "offsetY": "6px",
+            "blur": "6px",
+            "spread": "-6px"
+          },
+          {
+            "inset": false,
+            "color": "#0000004d",
+            "offsetX": "0px",
+            "offsetY": "0px",
+            "blur": "1px",
+            "spread": "0px"
+          },
+          {
+            "inset": true,
+            "color": "#ffffff0d",
+            "offsetX": "0px",
+            "offsetY": "0px",
+            "blur": "1px",
+            "spread": "0px"
+          }
+        ]
+      },
+      "md": {
+        "type": "shadow",
+        "value": [
+          {
+            "inset": false,
+            "color": "#00000000",
+            "offsetX": "0px",
+            "offsetY": "0px",
+            "blur": "0px",
+            "spread": "0px"
+          },
+          {
+            "inset": false,
+            "color": "#0000001a",
+            "offsetX": "0px",
+            "offsetY": "10px",
+            "blur": "12px",
+            "spread": "-6px"
+          },
+          {
+            "inset": false,
+            "color": "#0000004d",
+            "offsetX": "0px",
+            "offsetY": "0px",
+            "blur": "1px",
+            "spread": "0px"
+          },
+          {
+            "inset": true,
+            "color": "#ffffff0d",
+            "offsetX": "0px",
+            "offsetY": "0px",
+            "blur": "1px",
+            "spread": "0px"
+          }
+        ]
+      },
+      "lg": {
+        "type": "shadow",
+        "value": [
+          {
+            "inset": false,
+            "color": "#00000000",
+            "offsetX": "0px",
+            "offsetY": "0px",
+            "blur": "0px",
+            "spread": "0px"
+          },
+          {
+            "inset": false,
+            "color": "#0000001f",
+            "offsetX": "0px",
+            "offsetY": "12px",
+            "blur": "24px",
+            "spread": "-6px"
+          },
+          {
+            "inset": false,
+            "color": "#0000004d",
+            "offsetX": "0px",
+            "offsetY": "0px",
+            "blur": "1px",
+            "spread": "0px"
+          },
+          {
+            "inset": true,
+            "color": "#ffffff0d",
+            "offsetX": "0px",
+            "offsetY": "0px",
+            "blur": "1px",
+            "spread": "0px"
+          }
+        ]
+      },
+      "xlg": {
+        "type": "shadow",
+        "value": [
+          {
+            "inset": false,
+            "color": "#00000014",
+            "offsetX": "0px",
+            "offsetY": "32px",
+            "blur": "32px",
+            "spread": "-8px"
+          },
+          {
+            "inset": false,
+            "color": "#00000029",
+            "offsetX": "0px",
+            "offsetY": "6px",
+            "blur": "32px",
+            "spread": "-8px"
+          },
+          {
+            "inset": false,
+            "color": "#0000004d",
+            "offsetX": "0px",
+            "offsetY": "0px",
+            "blur": "1px",
+            "spread": "0px"
+          },
+          {
+            "inset": true,
+            "color": "#ffffff0d",
+            "offsetX": "0px",
+            "offsetY": "0px",
+            "blur": "1px",
+            "spread": "0px"
+          }
+        ]
+      }
     }
+  }
 }
 
 

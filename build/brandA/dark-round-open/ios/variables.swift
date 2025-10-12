@@ -1,6 +1,6 @@
 /*
  * Do not edit — auto-generated
- * on Sat, 11 Oct 2025, 13:02:37 GMT+7
+ * on Sun, 12 Oct 2025, 15:44:59 GMT+7
  * 
  * Brand: brandA
  * Mode: dark
@@ -19,10 +19,10 @@ public struct Tokens {
 
     // Color
     public static let colorBackgroundPrimary = UIColor(red: 0.094, green: 0.094, blue: 0.094, alpha: 1) // ref: {color.dark}
-    public static let colorBrandPrimary = UIColor(red: 0.227, green: 0.376, blue: 0.663, alpha: 1) // ref: {color.2}
-    public static let colorBrandPrimaryDark = UIColor(red: 0.322, green: 0.475, blue: 0.769, alpha: 1) // ref: {color.3}
-    public static let colorButtonBackgroundPrimary = UIColor(red: 0.322, green: 0.475, blue: 0.769, alpha: 1) // ref: {color.button.primary.background}
-    public static let colorButtonPrimaryBackground = UIColor(red: 0.322, green: 0.475, blue: 0.769, alpha: 1) // ref: {color.brand.primary-dark}
+    public static let colorBrandPrimary = UIColor(red: 0.431, green: 0.337, blue: 0.812, alpha: 1) // ref: {color.2}
+    public static let colorBrandPrimaryDark = UIColor(red: 0.396, green: 0.314, blue: 0.725, alpha: 1) // ref: {color.3}
+    public static let colorButtonBackgroundPrimary = UIColor(red: 0.396, green: 0.314, blue: 0.725, alpha: 1) // ref: {color.button.primary.background}
+    public static let colorButtonPrimaryBackground = UIColor(red: 0.396, green: 0.314, blue: 0.725, alpha: 1) // ref: {color.brand.primary-dark}
     public static let colorButtonText = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1) // ref: {color.white}
     public static let colorTextPrimary = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1) // ref: {color.white}
 

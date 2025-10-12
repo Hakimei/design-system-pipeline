@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Do not edit — auto-generated
-  ~ on Sat, 11 Oct 2025, 13:02:37 GMT+7
+  ~ on Sun, 12 Oct 2025, 15:44:59 GMT+7
   ~ 
   ~ Contains: primitive tokens
   -->
@@ -10,8 +10,8 @@
 
     <!-- Color -->
     <color name="color_1">#ffd9dee6</color>
-    <color name="color_2">#ff3a60a9</color>
-    <color name="color_3">#ff5279c4</color>
+    <color name="color_2">#ff6e56cf</color>
+    <color name="color_3">#ff6550b9</color>
 
     <!-- Font -->
     <string name="font_family_sans">'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'</string>
