@@ -1,12 +1,12 @@
 /*
  * Do not edit — auto-generated
- * on Sun, 12 Oct 2025, 16:45:00 GMT+7
+ * on Sun, 12 Oct 2025, 16:58:22 GMT+7
  * 
  * Brand: brandB
  * Mode: light
  * Shape: base
  * Density: compact
- * Contains: theme tokens that reference primitives (global) and aliases (base)
+ * Contains: semantic (theme) tokens that reference primitives (global) and alias (base)
  */
 
 import SwiftUI

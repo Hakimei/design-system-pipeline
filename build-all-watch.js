@@ -147,7 +147,6 @@ StyleDictionary.registerFormat({
   format: function({ dictionary, file }) {
     const header = file.options.fileHeader();
     const isReference = (value) => typeof value === 'string' && value.startsWith('{') && value.endsWith('}');
-    const toSnakeCase = (str) => str.replace(/([A-Z])/g, '_$1').toLowerCase();
 
     const styles = dictionary.allTokens
       .filter(token => token.type === 'typography')
@@ -501,7 +500,7 @@ function buildThemePlatforms(themesIndex) {
                                 `Mode: ${mode}`,
                                 `Shape: ${shape}`,
                                 `Density: ${density}`,
-                                `Contains: theme tokens that reference primitives (global) and aliases (base)`,
+                                `Contains: semantic (theme) tokens that reference primitives (global) and alias (base)`,
                             ]),
                             outputReferences: true, // References are resolved in theme files
                         },
@@ -515,7 +514,7 @@ function buildThemePlatforms(themesIndex) {
                                 `Mode: ${mode}`,
                                 `Shape: ${shape}`,
                                 `Density: ${density}`,
-                                `Contains: theme tokens that reference primitives (global) and aliases (base)`,
+                                `Contains: semantic (theme) tokens that reference primitives (global) and alias (base)`,
                             ]),
                         },
                         filter: (token) => !token.attributes.isPrimitive && !token.attributes.isAlias && token.type === 'typography',
@@ -528,6 +527,7 @@ function buildThemePlatforms(themesIndex) {
                                 `Mode: ${mode}`,
                                 `Shape: ${shape}`,
                                 `Density: ${density}`,
+                                `Contains: semantic (theme) tokens that reference primitives (global) and alias (base)`,
                             ]),
                             outputReferences: true,
                         },
@@ -547,7 +547,7 @@ function buildThemePlatforms(themesIndex) {
                                 `Mode: ${mode}`,
                                 `Shape: ${shape}`,
                                 `Density: ${density}`,
-                                `Contains: theme tokens that reference primitives (global) and aliases (base)`,
+                                `Contains: semantic (theme) tokens that reference primitives (global) and alias (base)`,
                             ]),
                             outputReferences: false,
                         },
@@ -562,7 +562,7 @@ function buildThemePlatforms(themesIndex) {
                                 `Mode: ${mode}`,
                                 `Shape: ${shape}`,
                                 `Density: ${density}`,
-                                `Contains: theme tokens that reference primitives (global) and aliases (base)`,
+                                `Contains: semantic (theme) tokens that reference primitives (global) and alias (base)`,
                             ]),
                         },
                         // Only include composite typography tokens
@@ -576,6 +576,7 @@ function buildThemePlatforms(themesIndex) {
                                 `Mode: ${mode}`,
                                 `Shape: ${shape}`,
                                 `Density: ${density}`,
+                                `Contains: semantic (theme) tokens that reference primitives (global) and alias (base)`,
                             ]),
                         },
                         // Only include shadow tokens
@@ -595,7 +596,7 @@ function buildThemePlatforms(themesIndex) {
                                 `Mode: ${mode}`,
                                 `Shape: ${shape}`,
                                 `Density: ${density}`,
-                                `Contains: theme tokens that reference primitives (global) and aliases (base)`,
+                                `Contains: semantic (theme) tokens that reference primitives (global) and alias (base)`,
                             ]),
                             outputReferences: false,
                         },
@@ -610,7 +611,7 @@ function buildThemePlatforms(themesIndex) {
                                 `Mode: ${mode}`,
                                 `Shape: ${shape}`,
                                 `Density: ${density}`,
-                                `Contains: theme tokens that reference primitives (global) and aliases (base)`,
+                                `Contains: semantic (theme) tokens that reference primitives (global) and alias (base)`,
                             ]),
                         },
                         // Only include composite typography tokens
@@ -626,6 +627,7 @@ function buildThemePlatforms(themesIndex) {
                                 `Mode: ${mode}`,
                                 `Shape: ${shape}`,
                                 `Density: ${density}`,
+                                `Contains: semantic (theme) tokens that reference primitives (global) and alias (base)`,
                             ]),
                         },
                         // Only include shadow tokens
