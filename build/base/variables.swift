@@ -1,6 +1,6 @@
 /*
  * Do not edit — auto-generated
- * on Sun, 12 Oct 2025, 16:58:22 GMT+7
+ * on Sun, 12 Oct 2025, 17:18:21 GMT+7
  * 
  * Contains: alias (base) tokens that reference primitives (global)
  */
@@ -11,9 +11,9 @@ public struct Tokens {
 
     // Color
     public static let colorDark = UIColor(red: 0.094, green: 0.094, blue: 0.094, alpha: 1)
-    public static let colorNeutral100 = UIColor(red: 0.976, green: 0.976, blue: 0.976, alpha: 1)
-    public static let colorNeutral800 = UIColor(red: 0.133, green: 0.133, blue: 0.133, alpha: 1)
-    public static let colorNeutral900 = UIColor(red: 0.114, green: 0.114, blue: 0.114, alpha: 1)
+    public static let colorGray100 = UIColor(red: 0.976, green: 0.976, blue: 0.976, alpha: 1)
+    public static let colorGray800 = UIColor(red: 0.133, green: 0.133, blue: 0.133, alpha: 1)
+    public static let colorGray900 = UIColor(red: 0.114, green: 0.114, blue: 0.114, alpha: 1)
     public static let colorWhite = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1)
 
     // Typography

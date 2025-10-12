@@ -46,7 +46,7 @@
         "isPrimitive": false
       }
     },
-    "neutral": {
+    "gray": {
       "100": {
         "value": "#f9f9f9",
         "type": "color",

@@ -2,7 +2,7 @@
   "color": {
     "background": {
       "primary": {
-        "value": "{color.neutral.100}",
+        "value": "{color.gray.100}",
         "type": "color"
       }
     },

@@ -1,6 +1,6 @@
 /*
  * Do not edit — auto-generated
- * on Sun, 12 Oct 2025, 16:58:22 GMT+7
+ * on Sun, 12 Oct 2025, 17:18:21 GMT+7
  * 
  * Brand: brandB
  * Mode: light
@@ -16,7 +16,7 @@
   --border-radius-small: 0;
 
   /* Color */
-  --color-background-primary: rgb(249, 249, 249); /* ref: {color.neutral.100} */
+  --color-background-primary: rgb(249, 249, 249); /* ref: {color.gray.100} */
   --color-brand-primary: rgb(229, 70, 102);
   --color-brand-primary-dark: rgb(70, 102, 229);
   --color-button-background-primary: var(--color-button-primary-background); /* ref: {color.button.primary.background} */

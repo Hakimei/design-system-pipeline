@@ -1,6 +1,6 @@
 /*
  * Do not edit — auto-generated
- * on Sun, 12 Oct 2025, 16:58:22 GMT+7
+ * on Sun, 12 Oct 2025, 17:18:21 GMT+7
  * 
  * Brand: brandB
  * Mode: light
@@ -19,7 +19,7 @@ public struct Tokens {
     public static let borderRadiusSmall = CGFloat(4.00)
 
     // Color
-    public static let colorBackgroundPrimary = UIColor(red: 0.976, green: 0.976, blue: 0.976, alpha: 1) // ref: {color.neutral.100}
+    public static let colorBackgroundPrimary = UIColor(red: 0.976, green: 0.976, blue: 0.976, alpha: 1) // ref: {color.gray.100}
     public static let colorBrandPrimary = UIColor(red: 0.898, green: 0.275, blue: 0.400, alpha: 1)
     public static let colorBrandPrimaryDark = UIColor(red: 0.275, green: 0.400, blue: 0.898, alpha: 1)
     public static let colorButtonBackgroundPrimary = UIColor(red: 0.898, green: 0.275, blue: 0.400, alpha: 1) // ref: {color.button.primary.background}
