@@ -119,8 +119,21 @@ StyleDictionary.registerFormat({
   name: 'custom/css/typography-classes',
   format: function({ dictionary, file }) {
     const header = file.options.fileHeader();
+    const isReference = (value) => typeof value === 'string' && value.startsWith('{') && value.endsWith('}');
+
     const classes = dictionary.allTokens
-      .map(token => `.${token.name} {\n${Object.entries(token.value).map(([prop, value]) => `  ${prop.replace(/([A-Z])/g, '-$1').toLowerCase()}: ${value};`).join('\n')}\n}`)
+      .map(token => {
+        const properties = Object.entries(token.value).map(([prop, value]) => {
+          const originalValue = token.original.value[prop];
+          let comment = '';
+          if (originalValue && isReference(originalValue)) {
+            comment = ` /* ref: ${originalValue} */`;
+          }
+          const cssProp = prop.replace(/([A-Z])/g, '-$1').toLowerCase();
+          return `  ${cssProp}: ${value};${comment}`;
+        }).join('\n');
+        return `.${token.name} {\n${properties}\n}`;
+      })
       .join('\n');
     let output = `/*\n * ${header.join('\n * ')}\n */\n${classes}\n`;
 
@@ -133,6 +146,7 @@ StyleDictionary.registerFormat({
   name: 'custom/android/styles',
   format: function({ dictionary, file }) {
     const header = file.options.fileHeader();
+    const isReference = (value) => typeof value === 'string' && value.startsWith('{') && value.endsWith('}');
     const toSnakeCase = (str) => str.replace(/([A-Z])/g, '_$1').toLowerCase();
 
     const styles = dictionary.allTokens
@@ -140,6 +154,11 @@ StyleDictionary.registerFormat({
       .map(token => {
         const properties = Object.entries(token.value)
           .map(([prop, value]) => {
+            const originalValue = token.original.value[prop];
+            let comment = '';
+            if (originalValue && isReference(originalValue)) {
+              comment = ` <!-- ref: ${originalValue} -->`;
+            }
             // Map token properties to Android XML attributes
             const androidPropMap = {
               fontFamily: 'android:fontFamily',
@@ -149,7 +168,7 @@ StyleDictionary.registerFormat({
               lineHeight: 'android:lineHeight', // Requires API 28+, value should be a dimension
             };
             const androidProp = androidPropMap[prop] || `item_unmapped_${prop}`;
-            return `    <item name="${androidProp}">${value}</item>`;
+            return `    <item name="${androidProp}">${value}</item>${comment}`;
           })
           .join('\n');
         return `  <style name="${token.name.replace(/-/g, '_')}">\n${properties}\n  </style>`;
@@ -191,15 +210,36 @@ StyleDictionary.registerFormat({
   name: 'custom/swift/textstyles',
   format: function({ dictionary, file }) {
     const header = file.options.fileHeader();
+    const isReference = (value) => typeof value === 'string' && value.startsWith('{') && value.endsWith('}');
     const toCamelCase = (str) => str.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
 
     const styles = dictionary.allTokens
       .filter(token => token.type === 'typography')
       .map(token => {
-        // The 'ts/size/lineheight' transform converts '%' to a unitless number, which is what .lineSpacing expects
-        const lineHeight = token.value.lineHeight;
+        const original = token.original.value;
 
-        return `struct ${toCamelCase(token.name.charAt(0).toUpperCase() + token.name.slice(1))}Style: ViewModifier {\n    func body(content: Content) -> some View {\n        content\n            .font(.system(size: ${token.value.fontSize}, weight: ${token.value.fontWeight}))\n            .lineSpacing(${lineHeight})\n            .tracking(${token.value.letterSpacing})\n    }\n}`;
+        const getComment = (prop) => {
+          const originalValue = original[prop];
+          if (originalValue && isReference(originalValue)) {
+            return ` // ref: ${originalValue}`;
+          }
+          return '';
+        };
+
+        // The 'ts/size/lineheight' transform converts '%' to a number, which is what .lineSpacing expects
+        // For lineSpacing, we need to calculate it based on fontSize if it's a relative value.
+        // Assuming your lineheight transform already handles this correctly.
+        const lineHeight = token.value.lineHeight; // This is already transformed
+        const structName = toCamelCase(token.name.charAt(0).toUpperCase() + token.name.slice(1));
+
+        return `struct ${structName}Style: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.system(size: ${token.value.fontSize}, weight: ${token.value.fontWeight}))${getComment('fontSize')}${getComment('fontWeight')}
+            .lineSpacing(${lineHeight})${getComment('lineHeight')}
+            .tracking(${token.value.letterSpacing})${getComment('letterSpacing')}
+    }
+}`;
       }).join('\n\n');
 
     return `/*\n * ${header.join('\n * ')}\n */\n\nimport SwiftUI\n\n${styles}\n`;
