@@ -1,11 +1,12 @@
 /*
  * Do not edit — auto-generated
- * on Sun, 12 Oct 2025, 16:32:41 GMT+7
+ * on Sun, 12 Oct 2025, 16:45:00 GMT+7
  * 
  * Brand: brandA
  * Mode: light
  * Shape: round
  * Density: open
+ * Contains: theme tokens that reference primitives (global) and aliases (base)
  */
 .text-title {
   font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; /* ref: {typography.fontFamily} */

@@ -439,7 +439,7 @@ function buildBase(tokens) {
                     destination: 'variables.css',
                     format: 'custom/css/variables-with-refs',
                     options: {
-                        fileHeader: () => fileHeader(['Contains: alias (base) tokens that reference primitives']),
+                        fileHeader: () => fileHeader(['Contains: alias (base) tokens that reference primitives (global)']),
                         outputReferences: false,
                     },
                     filter: (token) => token.attributes.isAlias,
@@ -452,7 +452,7 @@ function buildBase(tokens) {
                     destination: 'variables.xml',
                     format: 'custom/android/resources',
                     options: {
-                        fileHeader: () => fileHeader(['Contains: alias (base) tokens']),
+                        fileHeader: () => fileHeader(['Contains: alias (base) tokens that reference primitives (global)']),
                         outputReferences: false,
                     },
                     filter: (token) => token.attributes.isAlias,
@@ -465,7 +465,7 @@ function buildBase(tokens) {
                     destination: 'variables.swift',
                     format: 'custom/swift/tokens',
                     options: {
-                        fileHeader: () => fileHeader(['Contains: alias (base) tokens']),
+                        fileHeader: () => fileHeader(['Contains: alias (base) tokens that reference primitives (global)']),
                         outputReferences: false,
                     },
                     filter: (token) => token.attributes.isAlias,
@@ -501,6 +501,7 @@ function buildThemePlatforms(themesIndex) {
                                 `Mode: ${mode}`,
                                 `Shape: ${shape}`,
                                 `Density: ${density}`,
+                                `Contains: theme tokens that reference primitives (global) and aliases (base)`,
                             ]),
                             outputReferences: true, // References are resolved in theme files
                         },
@@ -514,6 +515,7 @@ function buildThemePlatforms(themesIndex) {
                                 `Mode: ${mode}`,
                                 `Shape: ${shape}`,
                                 `Density: ${density}`,
+                                `Contains: theme tokens that reference primitives (global) and aliases (base)`,
                             ]),
                         },
                         filter: (token) => !token.attributes.isPrimitive && !token.attributes.isAlias && token.type === 'typography',
@@ -545,6 +547,7 @@ function buildThemePlatforms(themesIndex) {
                                 `Mode: ${mode}`,
                                 `Shape: ${shape}`,
                                 `Density: ${density}`,
+                                `Contains: theme tokens that reference primitives (global) and aliases (base)`,
                             ]),
                             outputReferences: false,
                         },
@@ -559,6 +562,7 @@ function buildThemePlatforms(themesIndex) {
                                 `Mode: ${mode}`,
                                 `Shape: ${shape}`,
                                 `Density: ${density}`,
+                                `Contains: theme tokens that reference primitives (global) and aliases (base)`,
                             ]),
                         },
                         // Only include composite typography tokens
@@ -591,6 +595,7 @@ function buildThemePlatforms(themesIndex) {
                                 `Mode: ${mode}`,
                                 `Shape: ${shape}`,
                                 `Density: ${density}`,
+                                `Contains: theme tokens that reference primitives (global) and aliases (base)`,
                             ]),
                             outputReferences: false,
                         },
@@ -605,6 +610,7 @@ function buildThemePlatforms(themesIndex) {
                                 `Mode: ${mode}`,
                                 `Shape: ${shape}`,
                                 `Density: ${density}`,
+                                `Contains: theme tokens that reference primitives (global) and aliases (base)`,
                             ]),
                         },
                         // Only include composite typography tokens
