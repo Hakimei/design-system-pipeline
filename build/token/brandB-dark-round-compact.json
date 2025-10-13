@@ -72,25 +72,37 @@
         }
       }
     },
+    "background": {
+      "value": "#f8f5ec",
+      "type": "color",
+      "attributes": {
+        "isAlias": true
+      }
+    },
     "brand": {
       "primary": {
-        "value": "#E54666",
+        "value": "#BDEE63",
         "type": "color",
         "attributes": {
-          "isPrimitive": false,
-          "isAlias": false
+          "isAlias": true
         }
       },
       "primary-dark": {
-        "value": "#4666e5",
+        "value": "#c3ef72",
         "type": "color",
         "attributes": {
-          "isPrimitive": false,
-          "isAlias": false
+          "isAlias": true
         }
       }
     },
-    "background": {
+    "on-brand": {
+      "value": "{color.dark}",
+      "type": "color",
+      "attributes": {
+        "isAlias": true
+      }
+    },
+    "page": {
       "primary": {
         "value": "{color.dark}",
         "type": "color",
@@ -120,19 +132,19 @@
             "isAlias": false
           }
         }
-      },
-      "background": {
-        "primary": {
-          "value": "{color.button.primary.background}",
-          "type": "color",
-          "attributes": {
-            "isPrimitive": false,
-            "isAlias": false
-          }
+      }
+    },
+    "component-button": {
+      "primary": {
+        "value": "{color.button.primary.background}",
+        "type": "color",
+        "attributes": {
+          "isPrimitive": false,
+          "isAlias": false
         }
       },
       "text": {
-        "value": "{color.white}",
+        "value": "{color.on-brand}",
         "type": "color",
         "attributes": {
           "isPrimitive": false,

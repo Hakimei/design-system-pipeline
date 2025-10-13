@@ -1,16 +1,21 @@
 /*
  * Do not edit — auto-generated
- * on Sun, 12 Oct 2025, 17:18:21 GMT+7
+ * on Mon, 13 Oct 2025, 13:16:26 GMT+7
  * 
+ * Brand: brandA
  * Contains: alias (base) tokens that reference primitives (global)
  */
 :root {
 
   /* Color */
+  --color-background: rgb(242, 243, 247);
+  --color-brand-primary: rgb(110, 86, 207); /* ref: {color.2} */
+  --color-brand-primary-dark: rgb(101, 80, 185); /* ref: {color.3} */
   --color-dark: rgb(24, 24, 24);
   --color-gray-100: rgb(249, 249, 249);
   --color-gray-800: rgb(34, 34, 34);
   --color-gray-900: rgb(29, 29, 29);
+  --color-on-brand: rgb(255, 255, 255); /* ref: {color.white} */
   --color-white: rgb(255, 255, 255);
 
   /* Typography */

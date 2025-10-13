@@ -1,0 +1,29 @@
+/*
+ * Do not edit — auto-generated
+ * on Mon, 13 Oct 2025, 13:16:26 GMT+7
+ * 
+ * Brand: brandB
+ * Contains: alias (base) tokens that reference primitives (global)
+ */
+:root {
+
+  /* Color */
+  --color-background: rgb(248, 245, 236);
+  --color-brand-primary: rgb(189, 238, 99);
+  --color-brand-primary-dark: rgb(195, 239, 114);
+  --color-dark: rgb(24, 24, 24);
+  --color-gray-100: rgb(249, 249, 249);
+  --color-gray-800: rgb(34, 34, 34);
+  --color-gray-900: rgb(29, 29, 29);
+  --color-on-brand: rgb(24, 24, 24); /* ref: {color.dark} */
+  --color-white: rgb(255, 255, 255);
+
+  /* Typography */
+  --typography-font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; /* ref: {font.family.sans} */
+  --typography-font-size-body: 1rem; /* ref: {font.size.16} */
+  --typography-font-size-heading: 1.375rem; /* ref: {font.size.22} */
+  --typography-font-weight-body: 400; /* ref: {font.weight.regular} */
+  --typography-font-weight-heading: 500; /* ref: {font.weight.medium} */
+  --typography-line-height-body: 1.5;
+  --typography-line-height-heading: 1.3;
+}

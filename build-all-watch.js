@@ -350,11 +350,12 @@ async function buildThemes(tokenData) {
 
                     const finalTokens = JSON.parse(JSON.stringify(merged)); // Deep copy
                     addMetadata(finalTokens, primitiveTokens, 'isPrimitive', true);
-                    addMetadata(finalTokens, aliasTokens, 'isAlias', true);
+                    addMetadata(finalTokens, mergeDeep(aliasTokens, brandTokens), 'isAlias', true);
 
                     // Mark other tokens as not primitive and not alias
-                    [brandTokens, modeTokens, shapeTokens, densityTokens, componentTokens].forEach(tokenSet => {
+                    [modeTokens, shapeTokens, densityTokens, componentTokens].forEach(tokenSet => {
                         addMetadata(finalTokens, tokenSet, 'isPrimitive', false);
+                        // Brand tokens are aliases, so they are excluded from being marked as not an alias.
                         addMetadata(finalTokens, tokenSet, 'isAlias', false);
                     });
 
@@ -424,56 +425,63 @@ function buildGlobal(tokens) {
     console.log(`✅ Built global primitives for Web/Android/iOS`);
 }
 
-function buildBase(tokens) {
+function buildBase(tokenData) {
     console.log('\nBuilding base alias tokens...');
     const buildDir = './build';
-    const baseBuildPath = `${buildDir}/base/`;
-    const SDBase = new StyleDictionary({
-        tokens: tokens,
-        platforms: {
-            css: {
-                transformGroup: 'custom/css',
-                buildPath: baseBuildPath,
-                files: [{
-                    destination: 'variables.css',
-                    format: 'custom/css/variables-with-refs',
-                    options: {
-                        fileHeader: () => fileHeader(['Contains: alias (base) tokens that reference primitives (global)']),
-                        outputReferences: false,
-                    },
-                    filter: (token) => token.attributes.isAlias,
-                }]
-            },
-            android: {
-                transformGroup: 'custom/android',
-                buildPath: baseBuildPath,
-                files: [{
-                    destination: 'variables.xml',
-                    format: 'custom/android/resources',
-                    options: {
-                        fileHeader: () => fileHeader(['Contains: alias (base) tokens that reference primitives (global)']),
-                        outputReferences: false,
-                    },
-                    filter: (token) => token.attributes.isAlias,
-                }]
-            },
-            ios: {
-                transformGroup: 'custom/ios-swift',
-                buildPath: baseBuildPath,
-                files: [{
-                    destination: 'variables.swift',
-                    format: 'custom/swift/tokens',
-                    options: {
-                        fileHeader: () => fileHeader(['Contains: alias (base) tokens that reference primitives (global)']),
-                        outputReferences: false,
-                    },
-                    filter: (token) => token.attributes.isAlias,
-                }]
+    const { primitiveTokens, aliasTokens, brands } = tokenData;
+
+    for (const [brandName, brandTokens] of Object.entries(brands)) {
+        const baseBuildPath = `${buildDir}/base/${brandName}/`;
+        const headerComment = () => fileHeader([`Brand: ${brandName}`, 'Contains: alias (base) tokens that reference primitives (global)']);
+
+        let mergedTokens = mergeDeep(primitiveTokens, aliasTokens);
+        mergedTokens = mergeDeep(mergedTokens, brandTokens);
+
+        addMetadata(mergedTokens, primitiveTokens, 'isPrimitive', true);
+        addMetadata(mergedTokens, primitiveTokens, 'isAlias', false);
+        addMetadata(mergedTokens, aliasTokens, 'isAlias', true);
+        addMetadata(mergedTokens, aliasTokens, 'isPrimitive', false);
+        addMetadata(mergedTokens, brandTokens, 'isAlias', true);
+        addMetadata(mergedTokens, brandTokens, 'isPrimitive', false);
+
+        const SDBase = new StyleDictionary({
+            tokens: mergedTokens,
+            platforms: {
+                css: {
+                    transformGroup: 'custom/css',
+                    buildPath: baseBuildPath,
+                    files: [{
+                        destination: 'variables.css',
+                        format: 'custom/css/variables-with-refs',
+                        options: { fileHeader: headerComment, outputReferences: false },
+                        filter: (token) => token.attributes.isAlias,
+                    }]
+                },
+                android: {
+                    transformGroup: 'custom/android',
+                    buildPath: baseBuildPath,
+                    files: [{
+                        destination: 'variables.xml',
+                        format: 'custom/android/resources',
+                        options: { fileHeader: headerComment, outputReferences: false },
+                        filter: (token) => token.attributes.isAlias,
+                    }]
+                },
+                ios: {
+                    transformGroup: 'custom/ios-swift',
+                    buildPath: baseBuildPath,
+                    files: [{
+                        destination: 'variables.swift',
+                        format: 'custom/swift/tokens',
+                        options: { fileHeader: headerComment, outputReferences: false },
+                        filter: (token) => token.attributes.isAlias,
+                    }]
+                }
             }
-        }
-    });
-    SDBase.buildAllPlatforms();
-    console.log(`✅ Built base aliases for Web/Android/iOS`);
+        });
+        SDBase.buildAllPlatforms();
+        console.log(`✅ Built base aliases for ${brandName}`);
+    }
 }
 
 function buildThemePlatforms(themesIndex) {
@@ -650,18 +658,23 @@ async function buildAll() {
     const tokenData = await loadTokens();
 
     // Create a single, fully-merged token object with all metadata first.
-    const allTokens = mergeDeep(tokenData.primitiveTokens, tokenData.aliasTokens);
+    let allTokens = mergeDeep(tokenData.primitiveTokens, tokenData.aliasTokens);
+    Object.values(tokenData.brands).forEach(brandTokenSet => {
+        allTokens = mergeDeep(allTokens, brandTokenSet);
+    });
     addMetadata(allTokens, tokenData.primitiveTokens, 'isPrimitive', true);
     addMetadata(allTokens, tokenData.aliasTokens, 'isAlias', true);
+    Object.values(tokenData.brands).forEach(brandTokenSet => addMetadata(allTokens, brandTokenSet, 'isAlias', true));
     // Ensure all tokens have the attributes defined, even if false.
     addMetadata(allTokens, tokenData.primitiveTokens, 'isAlias', false);
     addMetadata(allTokens, tokenData.aliasTokens, 'isPrimitive', false);
+    Object.values(tokenData.brands).forEach(brandTokenSet => addMetadata(allTokens, brandTokenSet, 'isPrimitive', false));
 
     const themesIndex = await buildThemes(tokenData);
     
     // Now, build the global and base files from the pre-processed token object.
     buildGlobal(allTokens);
-    buildBase(allTokens);
+    buildBase(tokenData);
     buildThemePlatforms(themesIndex);
 
     console.log(`🎉 Build complete!`);

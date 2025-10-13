@@ -1,6 +1,6 @@
 /*
  * Do not edit — auto-generated
- * on Sun, 12 Oct 2025, 17:18:21 GMT+7
+ * on Mon, 13 Oct 2025, 13:16:26 GMT+7
  * 
  * Brand: brandB
  * Mode: dark
@@ -19,12 +19,10 @@ public struct Tokens {
     public static let borderRadiusSmall = CGFloat(0.00)
 
     // Color
-    public static let colorBackgroundPrimary = UIColor(red: 0.094, green: 0.094, blue: 0.094, alpha: 1) // ref: {color.dark}
-    public static let colorBrandPrimary = UIColor(red: 0.898, green: 0.275, blue: 0.400, alpha: 1)
-    public static let colorBrandPrimaryDark = UIColor(red: 0.275, green: 0.400, blue: 0.898, alpha: 1)
-    public static let colorButtonBackgroundPrimary = UIColor(red: 0.275, green: 0.400, blue: 0.898, alpha: 1) // ref: {color.button.primary.background}
-    public static let colorButtonPrimaryBackground = UIColor(red: 0.275, green: 0.400, blue: 0.898, alpha: 1) // ref: {color.brand.primary-dark}
-    public static let colorButtonText = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1) // ref: {color.white}
+    public static let colorButtonPrimaryBackground = UIColor(red: 0.765, green: 0.937, blue: 0.447, alpha: 1) // ref: {color.brand.primary-dark}
+    public static let colorComponentButtonPrimary = UIColor(red: 0.765, green: 0.937, blue: 0.447, alpha: 1) // ref: {color.button.primary.background}
+    public static let colorComponentButtonText = UIColor(red: 0.094, green: 0.094, blue: 0.094, alpha: 1) // ref: {color.on-brand}
+    public static let colorPagePrimary = UIColor(red: 0.094, green: 0.094, blue: 0.094, alpha: 1) // ref: {color.dark}
     public static let colorTextPrimary = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1) // ref: {color.white}
 
     // Spacing

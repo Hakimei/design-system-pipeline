@@ -1,5 +1,5 @@
 body {
-  background: var(--color-background-primary);
+  background: var(--color-page-primary);
   color: var(--color-text-primary);
   font-family: var(--typography-font-family);
   font-size: var(--typography-font-size-heading);
@@ -15,8 +15,8 @@ body {
     This decouples the component's internal styling from the global token names,
     making it more modular and maintainable.
   */
-  --btn-color-submit: var(--color-button-background-primary);
-  --btn-color-text: var(--color-button-text);
+  --btn-color-submit: var(--color-component-button-primary);
+  --btn-color-text: var(--color-component-button-text);
   --btn-font-size-body: var(--typography-font-size-body);
   --btn-font-size-weight: var(--typography-font-weight-body);
   --btn-spacing-padding: var(--spacing-button-padding) var(--spacing-button-padding);

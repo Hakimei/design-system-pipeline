@@ -1,14 +1,22 @@
 {
   "color": {
+    "background": {
+        "value": "#f8f5ec",
+        "type": "color"
+      },  
     "brand": {
       "primary": {
-        "value": "#E54666",
+        "value": "#BDEE63",
         "type": "color"
       },
       "primary-dark": {
-        "value": "#4666e5",
+        "value": "#c3ef72",
         "type": "color"
       }
+    },
+    "on-brand": {
+        "value": "{color.dark}",
+        "type": "color"
     }
   }
 }

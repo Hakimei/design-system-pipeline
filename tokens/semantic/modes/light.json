@@ -1,8 +1,8 @@
 {
   "color": {
-    "background": {
+    "page": {
       "primary": {
-        "value": "{color.gray.100}",
+        "value": "{color.background}",
         "type": "color"
       }
     },

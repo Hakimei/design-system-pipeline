@@ -72,25 +72,37 @@
         }
       }
     },
+    "background": {
+      "value": "#f2f3f7",
+      "type": "color",
+      "attributes": {
+        "isAlias": true
+      }
+    },
     "brand": {
       "primary": {
         "value": "{color.2}",
         "type": "color",
         "attributes": {
-          "isPrimitive": false,
-          "isAlias": false
+          "isAlias": true
         }
       },
       "primary-dark": {
         "value": "{color.3}",
         "type": "color",
         "attributes": {
-          "isPrimitive": false,
-          "isAlias": false
+          "isAlias": true
         }
       }
     },
-    "background": {
+    "on-brand": {
+      "value": "{color.white}",
+      "type": "color",
+      "attributes": {
+        "isAlias": true
+      }
+    },
+    "page": {
       "primary": {
         "value": "{color.dark}",
         "type": "color",
@@ -120,19 +132,19 @@
             "isAlias": false
           }
         }
-      },
-      "background": {
-        "primary": {
-          "value": "{color.button.primary.background}",
-          "type": "color",
-          "attributes": {
-            "isPrimitive": false,
-            "isAlias": false
-          }
+      }
+    },
+    "component-button": {
+      "primary": {
+        "value": "{color.button.primary.background}",
+        "type": "color",
+        "attributes": {
+          "isPrimitive": false,
+          "isAlias": false
         }
       },
       "text": {
-        "value": "{color.white}",
+        "value": "{color.on-brand}",
         "type": "color",
         "attributes": {
           "isPrimitive": false,

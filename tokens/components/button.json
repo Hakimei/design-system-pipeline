@@ -1,14 +1,12 @@
 {
   "color": {
-    "button": {
-      "background": {
-        "primary": {
+    "component-button": {
+      "primary": {
           "value": "{color.button.primary.background}",
           "type": "color"
-        }
       },
       "text": {
-        "value": "{color.white}",
+        "value": "{color.on-brand}",
         "type": "color"
       }
     }

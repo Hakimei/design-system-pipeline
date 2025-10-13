@@ -1,6 +1,6 @@
 /*
  * Do not edit — auto-generated
- * on Sun, 12 Oct 2025, 17:18:21 GMT+7
+ * on Mon, 13 Oct 2025, 13:16:26 GMT+7
  * 
  * Brand: brandA
  * Mode: light
@@ -16,12 +16,10 @@
   --border-radius-small: 0;
 
   /* Color */
-  --color-background-primary: rgb(249, 249, 249); /* ref: {color.gray.100} */
-  --color-brand-primary: rgb(110, 86, 207); /* ref: {color.2} */
-  --color-brand-primary-dark: rgb(101, 80, 185); /* ref: {color.3} */
-  --color-button-background-primary: var(--color-button-primary-background); /* ref: {color.button.primary.background} */
-  --color-button-primary-background: var(--color-brand-primary); /* ref: {color.brand.primary} */
-  --color-button-text: rgb(255, 255, 255); /* ref: {color.white} */
+  --color-button-primary-background: rgb(110, 86, 207); /* ref: {color.brand.primary} */
+  --color-component-button-primary: var(--color-button-primary-background); /* ref: {color.button.primary.background} */
+  --color-component-button-text: rgb(255, 255, 255); /* ref: {color.on-brand} */
+  --color-page-primary: rgb(242, 243, 247); /* ref: {color.background} */
   --color-text-primary: rgb(24, 24, 24); /* ref: {color.dark} */
 
   /* Spacing */

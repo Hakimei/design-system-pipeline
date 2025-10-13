@@ -1,5 +1,9 @@
 {
   "color": {
+    "background": {
+        "value": "#f2f3f7",
+        "type": "color"
+      },
     "brand": {
       "primary": {
         "value": "{color.2}",
@@ -9,6 +13,10 @@
         "value": "{color.3}",
         "type": "color"
       }
+      },
+    "on-brand": {
+        "value": "{color.white}",
+        "type": "color"
     }
   }
 }

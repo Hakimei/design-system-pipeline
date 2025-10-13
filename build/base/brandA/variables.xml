@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Do not edit — auto-generated
+  ~ on Mon, 13 Oct 2025, 13:16:26 GMT+7
+  ~ 
+  ~ Brand: brandA
+  ~ Contains: alias (base) tokens that reference primitives (global)
+  -->
+
+<resources>
+
+    <!-- Color -->
+    <color name="color_background">#fff2f3f7</color>
+    <color name="color_brand_primary">#ff6e56cf</color> <!-- ref: {color.2} -->
+    <color name="color_brand_primary_dark">#ff6550b9</color> <!-- ref: {color.3} -->
+    <color name="color_dark">#ff181818</color>
+    <color name="color_gray_100">#fff9f9f9</color>
+    <color name="color_gray_800">#ff222222</color>
+    <color name="color_gray_900">#ff1d1d1d</color>
+    <color name="color_on_brand">#ffffffff</color> <!-- ref: {color.white} -->
+    <color name="color_white">#ffffffff</color>
+
+    <!-- Typography -->
+    <string name="typography_font_family">'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'</string> <!-- ref: {font.family.sans} -->
+    <dimen name="typography_font_size_body">16.00dp</dimen> <!-- ref: {font.size.16} -->
+    <dimen name="typography_font_size_heading">22.00dp</dimen> <!-- ref: {font.size.22} -->
+    <string name="typography_font_weight_body">400</string> <!-- ref: {font.weight.regular} -->
+    <string name="typography_font_weight_heading">500</string> <!-- ref: {font.weight.medium} -->
+    <string name="typography_line_height_body">1.5</string>
+    <string name="typography_line_height_heading">1.3</string>
+</resources>

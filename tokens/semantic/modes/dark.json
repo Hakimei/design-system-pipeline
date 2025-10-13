@@ -1,6 +1,6 @@
 {
   "color": {
-    "background": {
+    "page": {
       "primary": {
         "value": "{color.dark}",
         "type": "color"
